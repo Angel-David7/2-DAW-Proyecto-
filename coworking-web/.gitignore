@@ -5,6 +5,9 @@ Thumbs.db
 # Entorno
 .env
 
+# Nodes modules
+node_modules
+
 # Node
 node_modules/
 npm-debug.log*
