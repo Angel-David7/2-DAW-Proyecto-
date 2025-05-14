@@ -2,7 +2,7 @@
   "name": "greenwork-web",
   "version": "1.0.0",
   "scripts": {
-    "bootsrap": "bash ./bootsrap.sh",
+    "bootstrap": "bash ../bootstrap.sh",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run"
   },
@@ -15,6 +15,7 @@
     "pg": "^8.16.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.7.0"
+    "@faker-js/faker": "^9.7.0",
+    "nodemon": "^3.1.10"
   }
 }
