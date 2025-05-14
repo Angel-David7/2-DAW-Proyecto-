@@ -1,0 +1,48 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Entorno
+.env
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Directorios de build / dist
+dist/
+build/
+
+# Vite / React
+.vite/
+*.cache/
+
+# Archivos de sistema de bases de datos
+pgdata/
+
+# nvm
+/.nvmrc
+
+# IDEs / editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Docker
+docker-compose.override.yml
+*.pid
+*.seed
+
+# Otros
+coverage/
+*.tgz
