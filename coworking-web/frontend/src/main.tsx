@@ -9,7 +9,7 @@ function App() {
       style={{
         height: '100vh',
         width: '100vw',
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#C2BEBE',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -28,7 +28,7 @@ function App() {
       />
       <a
         href="/login.html"
-        target="_blank"
+       
         rel="noopener noreferrer"
         style={{
           position: 'absolute',
