@@ -2,7 +2,7 @@
   "name": "greenwork-web",
   "version": "1.0.0",
   "scripts": {
-    "bootsrap": "bash ./bootsrap.sh",
+    "bootstrap": "bash ../bootstrap.sh",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run"
   },
