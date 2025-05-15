@@ -1,8 +1,20 @@
-import { StrictMode } from 'react';
+import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 
 function App() {
+  const [leyAceptada, setLeyAceptada] = useState(false);
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leyAceptada) {
+      alert('Debes aceptar la Ley de Protección de Datos para registrarte.');
+      return;
+    }
+    alert('Formulario enviado correctamente.');
+  };
+
   return (
     <div
       style={{
@@ -23,7 +35,7 @@ function App() {
           style={{
             width: '700px',
             height: 'auto',
-            imageRendering: 'crisp-edges', // evita desenfoque
+            imageRendering: 'crisp-edges',
             objectFit: 'contain',
           }}
         />
@@ -31,6 +43,7 @@ function App() {
 
       {/* Formulario a la derecha */}
       <form
+        onSubmit={handleSubmit}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -67,7 +80,6 @@ function App() {
             style={{
               fontWeight: 'bold',
               color: 'black',
-              
             }}
           >
             Nombre Completo:
@@ -82,6 +94,7 @@ function App() {
               borderRadius: '5px',
               border: '1px solid #ccc',
             }}
+            required
           />
         </div>
 
@@ -92,7 +105,6 @@ function App() {
             style={{
               fontWeight: 'bold',
               color: 'black',
-              
             }}
           >
             Teléfono:
@@ -107,6 +119,7 @@ function App() {
               borderRadius: '5px',
               border: '1px solid #ccc',
             }}
+            required
           />
         </div>
 
@@ -117,7 +130,6 @@ function App() {
             style={{
               fontWeight: 'bold',
               color: 'black',
-             
             }}
           >
             Correo:
@@ -132,6 +144,7 @@ function App() {
               borderRadius: '5px',
               border: '1px solid #ccc',
             }}
+            required
           />
         </div>
 
@@ -142,7 +155,6 @@ function App() {
             style={{
               fontWeight: 'bold',
               color: 'black',
-              
             }}
           >
             Contraseña:
@@ -157,9 +169,43 @@ function App() {
               borderRadius: '5px',
               border: '1px solid #ccc',
             }}
+            required
           />
         </div>
 
+        {/* Checkbox Ley Protección de Datos */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '15px',
+            color: 'black',
+            marginLeft: '40px',
+            marginTop: '10px',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={leyAceptada}
+            readOnly
+            onClick={(e) => {
+              e.preventDefault();
+              setMostrarModal(true);
+            }}
+          />
+          <label>
+            Acepto la{' '}
+            <span
+              onClick={() => setMostrarModal(true)}
+              style={{ textDecoration: 'underline', cursor: 'pointer', fontWeight: 'bold' }}
+            >
+              Ley de Protección de Datos
+            </span>
+          </label>
+        </div>
+
+        {/* Ya tienes cuenta */}
         <div
           style={{
             display: 'flex',
@@ -169,7 +215,7 @@ function App() {
             fontSize: '17px',
             color: 'black',
             marginBottom: '0px',
-            marginTop: '150px',
+            marginTop: '30px',
             marginLeft: '40px',
           }}
         >
@@ -205,6 +251,77 @@ function App() {
           Registrar
         </button>
       </form>
+
+      {/* Modal Ley de Protección de Datos */}
+      {mostrarModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+          onClick={() => setMostrarModal(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              backgroundColor: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              width: '400px',
+              maxHeight: '80vh',
+              overflowY: 'auto',
+              boxShadow: '0 0 15px rgba(0,0,0,0.3)',
+              fontSize: '14px',
+              color: 'black',
+            }}
+          >
+            <h2>Ley de Protección de Datos</h2>
+            <p style={{ textAlign: 'justify' }}>
+              Tus datos personales serán tratados conforme a la legislación vigente en materia de protección de datos.
+              Al aceptar, consientes que tus datos se utilicen con fines administrativos y de comunicación interna.
+              Para más detalles, consulta nuestra política de privacidad completa.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', gap: '10px' }}>
+              <button
+                onClick={() => setMostrarModal(false)}
+                style={{
+                  backgroundColor: '#ccc',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  setLeyAceptada(true);
+                  setMostrarModal(false);
+                }}
+                style={{
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+              >
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
