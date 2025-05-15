@@ -2,11 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 
-interface AppProps {
-    nombreUsuario: string;
-}
-
-function App({ nombreUsuario }: AppProps) {
+function App() {
     return (
         <div
             style={{
@@ -16,7 +12,6 @@ function App({ nombreUsuario }: AppProps) {
                 flexDirection: 'column',
                 fontFamily: 'Arial, sans-serif',
                 backgroundColor: 'white',
-                overflow: 'hidden',
             }}
         >
             {/* Encabezado */}
@@ -44,7 +39,7 @@ function App({ nombreUsuario }: AppProps) {
                         objectFit: 'contain',
                     }}
                 />
-                 <nav style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                <nav style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                     <a href="/iniciousuario.html" style={navLinkStyle}>Inicio</a>
                     <a href='./ver-espacios.html'style={navLinkStyle}>Espacios de reuniones</a>
                     <a href="/Reservar-espacio.html" style={navLinkStyle}>Reservar espacio</a>
@@ -53,52 +48,33 @@ function App({ nombreUsuario }: AppProps) {
                 </nav>
             </header>
 
-            {/* Contenido desplazable */}
+            {/* Contenido con caja */}
             <main
                 style={{
                     marginTop: '100px',
-                    padding: '20px',
                     flexGrow: 1,
-                    overflowY: 'auto',
                     display: 'flex',
                     justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '20px',
                 }}
             >
                 <div
                     style={{
-                        maxWidth: '900px',
-                        width: '100%',
-                        textAlign: 'left',
-                        color: 'black',
+                        width: '300px',
+                        height: '200px',
+                        backgroundColor: '#f0f0f0',
+                        border: '1px solid #ccc',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontSize: '18px',
+                        fontWeight: 'bold',
+                        color: '#333',
                     }}
                 >
-                    <h1
-                        style={{
-                            textAlign: 'center',
-                            marginBottom: '100px',
-                        }}
-                    >
-                        ¡Bienvenido/a, {nombreUsuario}!
-                    </h1>
-
-                    <section style={{ marginBottom: '40px' }}>
-                        <h2>Tus reservas activas</h2>
-                        <p>
-                            Aquí puedes ver un resumen de tus reservas actuales. Si no tienes ninguna, te invitamos a realizar una nueva desde la sección “Reservar espacio”.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2>Espacios destacados</h2>
-                        <p>
-                            Te mostramos algunos de los espacios más populares entre nuestros usuarios, disponibles para reservar:
-                        </p>
-                        <ul style={{ listStyle: 'none', paddingLeft: 0, lineHeight: '1.7' }}>
-                            <li><strong>Escritorio Flex</strong><br />Ideal para trabajo individual y flexible.</li>
-                            <li style={{ marginTop: '10px' }}><strong>Cabina Privada</strong><br />Perfecta para videollamadas y máxima concentración.</li>
-                            <li style={{ marginTop: '10px' }}><strong>Sala Creativa</strong><br />Espacio amplio para reuniones de equipo y sesiones de ideas.</li>
-                        </ul>
-                    </section>
+                    Caja de contenido
                 </div>
             </main>
 
@@ -128,10 +104,8 @@ const navLinkStyle = {
     fontSize: '14px',
 };
 
-const usuarioReal = 'Belinda';
-
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <App nombreUsuario={usuarioReal} />
+        <App />
     </StrictMode>
 );
