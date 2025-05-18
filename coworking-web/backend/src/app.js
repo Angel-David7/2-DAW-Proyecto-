@@ -7,7 +7,9 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/spaces', require('./routes/spaces'));
 app.use('/api/reservations', require('./routes/reservations'));
+app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
+
 
 // Error handler
 app.use((err, req, res, next) => {
