@@ -2,19 +2,32 @@ const router = require('express').Router();
 const { z } = require('zod');
 const validate = require('../middlewares/validate');
 const { checkAuth } = require('../middlewares/auth');
-const ctrl = require('../controllers/reservations');
+const ctrl = require('../controllers/notifications');
 
 /**
  * @swagger
  * tags:
- *   name: Reservations
- *   description: Reservas de espacios
+ *   name: Notifications
+ *   description: Notificaciones de reservas
  */
 /**
  * @swagger
- * /api/reservations:
+ * /api/notifications:
+ *   get:
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de notificaciones
+ */
+router.get('/', checkAuth, ctrl.list);
+
+/**
+ * @swagger
+ * /api/notifications:
  *   post:
- *     tags: [Reservations]
+ *     tags: [Notifications]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -24,36 +37,20 @@ const ctrl = require('../controllers/reservations');
  *           schema:
  *             type: object
  *             properties:
- *               space_id:
+ *               reservation_id:
  *                 type: integer
- *               start_time:
+ *               type:
  *                 type: string
- *                 format: date-time
- *               end_time:
- *                 type: string
- *                 format: date-time
- *             required: [space_id, start_time, end_time]
+ *             required: [reservation_id, type]
  *     responses:
- *       200:
- *         description: Reserva creada
+ *       201:
+ *         description: Notificación creada
  */
 router.post(
   '/',
   checkAuth,
-  validate(z.object({ space_id: z.number().int(), start_time: z.string(), end_time: z.string() })),
+  validate(z.object({ reservation_id: z.number().int(), type: z.string() })),
   ctrl.create
 );
 
-/**
- * @swagger
- * /api/reservations:
- *   get:
- *     tags: [Reservations]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Reservas del usuario
- */
-router.get('/', checkAuth, ctrl.listUser);
 module.exports = router;
