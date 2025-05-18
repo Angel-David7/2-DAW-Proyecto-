@@ -1,6 +1,23 @@
-const r = require('express').Router();
-const ctrl = require('../controllers/spaces');
+const router = require('express').Router();
 const { checkAuth } = require('../middlewares/auth');
+const ctrl = require('../controllers/spaces');
 
-r.get('/', checkAuth, ctrl.list);
-module.exports = r;
+/**
+ * @swagger
+ * tags:
+ *   name: Spaces
+ *   description: Gestión de espacios
+ */
+/**
+ * @swagger
+ * /api/spaces:
+ *   get:
+ *     tags: [Spaces]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de espacios
+ */
+router.get('/', checkAuth, ctrl.list);
+module.exports = router;
