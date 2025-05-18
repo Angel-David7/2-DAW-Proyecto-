@@ -1,7 +1,15 @@
 require('dotenv').config({ path: '../.env' });
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const { swaggerOptions } = require('./swagger');
+
 const app = express();
 app.use(express.json());
+
+// Swagger setup
+const specs = swaggerJsdoc(swaggerOptions);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Rutas
 app.use('/api/auth', require('./routes/auth'));
@@ -9,7 +17,6 @@ app.use('/api/spaces', require('./routes/spaces'));
 app.use('/api/reservations', require('./routes/reservations'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
-
 
 // Error handler
 app.use((err, req, res, next) => {
