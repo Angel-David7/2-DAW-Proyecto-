@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-module.exports.checkAuth = (req, res, next) => {
+exports.checkAuth = (req, res, next) => {
   const auth = req.headers.authorization;
   if (!auth) return res.status(401).json({ error: 'No token' });
   const token = auth.split(' ')[1];
