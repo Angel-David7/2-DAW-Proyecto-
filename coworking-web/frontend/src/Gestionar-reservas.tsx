@@ -42,6 +42,9 @@ function Header() {
             <a href="/inicio-admin.html" style={navLinkStyle}>
                 Inicio
             </a>
+            <a href="./Gestion-usuarios.html" style={navLinkStyle}>
+                Gestionar Usuarios
+            </a>
             <a href="./Gestionar-reservas.html" style={navLinkStyle}>
                 Gestionar reservas
             </a>
