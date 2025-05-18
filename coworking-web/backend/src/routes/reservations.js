@@ -1,7 +1,59 @@
-const r = require('express').Router();
-const ctrl = require('../controllers/reservations');
+const router = require('express').Router();
+const { z } = require('zod');
+const validate = require('../middlewares/validate');
 const { checkAuth } = require('../middlewares/auth');
+const ctrl = require('../controllers/reservations');
 
-r.post('/', checkAuth, ctrl.create);
-r.get('/', checkAuth, ctrl.listUser);
-module.exports = r;
+/**
+ * @swagger
+ * tags:
+ *   name: Reservations
+ *   description: Reservas de espacios
+ */
+/**
+ * @swagger
+ * /api/reservations:
+ *   post:
+ *     tags: [Reservations]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               space_id:
+ *                 type: integer
+ *               start_time:
+ *                 type: string
+ *                 format: date-time
+ *               end_time:
+ *                 type: string
+ *                 format: date-time
+ *             required: [space_id, start_time, end_time]
+ *     responses:
+ *       200:
+ *         description: Reserva creada
+ */
+router.post(
+  '/',
+  checkAuth,
+  validate(z.object({ space_id: z.number().int(), start_time: z.string(), end_time: z.string() })),
+  ctrl.create
+);
+
+/**
+ * @swagger
+ * /api/reservations:
+ *   get:
+ *     tags: [Reservations]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Reservas del usuario
+ */
+router.get('/', checkAuth, ctrl.listUser);
+module.exports = router;
