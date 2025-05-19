@@ -5,6 +5,7 @@ RUN corepack enable
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
+COPY knexfile.js ./ 
 
 RUN pnpm install --frozen-lockfile
 
