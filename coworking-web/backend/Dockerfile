@@ -13,5 +13,5 @@ COPY . .
 
 EXPOSE 4000
 
-CMD pnpm run migrate && pnpm run seed && pnpm dev
+CMD pnpm dev
 

@@ -17,6 +17,9 @@ app.use('/api/spaces', require('./routes/spaces'));
 app.use('/api/reservations', require('./routes/reservations'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/admin', require('./routes/admin'));
+app.get('/api/healthz', (req, res) => {
+  res.json({ status: '0k', timestamp: new Date().toISOString() });
+});
 
 // Error handler
 app.use((err, req, res, next) => {
