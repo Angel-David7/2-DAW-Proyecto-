@@ -7,12 +7,12 @@ import {
 
 // Importa tus páginas
 import App from "./index.tsx";
-import Login from "./login";
-import Registrate from "./register";
-import InicioUsuario from "./iniciousuario";
-import EspaciosReuniones from './ver-espacios';
-import ReservarEspacio from './Reservar-espacio';
-import MisReservas from './mis-reservas';
+import Login from "./login.tsx";
+import Registrate from "./register.tsx";
+import InicioUsuario from "./iniciousuario.tsx";
+import EspaciosReuniones from './ver-espacios.tsx';
+import ReservarEspacio from './Reservar-espacio.tsx';
+import MisReservas from './mis-reservas.tsx';
 import AdminInicio  from "./inicio-admin.tsx";
 import GestionUsuarios from "./Gestion-usuarios.tsx";
 import Gestionarreservas from "./Gestionar-reservas.tsx";

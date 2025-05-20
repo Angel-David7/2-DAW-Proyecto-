@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './ReservarEspacio.css';
 
 export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
@@ -34,13 +35,13 @@ Horario: ${horario}`);
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="reservar-container">
       <Header />
-      <main style={mainStyle}>
-        <div style={responsiveContainer}>
+      <main className="reservar-main">
+        <div className="reservar-content">
           <EspacioImagen espacio={espacioSeleccionado} />
-          <form onSubmit={handleSubmit} style={formularioStyle}>
-            <h2 style={{ textAlign: 'center', color: '#333' }}>Reserva de Espacio</h2>
+          <form className="reservar-formulario" onSubmit={handleSubmit}>
+            <h2>Reserva de Espacio</h2>
 
             <label>
               Espacio:
@@ -48,7 +49,7 @@ Horario: ${horario}`);
                 value={espacioSeleccionado}
                 onChange={(e) => setEspacioSeleccionado(e.target.value)}
                 required
-                style={inputStyle}
+                className="reservar-input"
               >
                 <option value="">Selecciona un espacio</option>
                 {Object.keys(costosPorEspacio).map((espacio) => (
@@ -65,7 +66,7 @@ Horario: ${horario}`);
                 type="text"
                 value={costo ? `$${costo}` : ''}
                 readOnly
-                style={{ ...inputStyle, backgroundColor: '#e0e0e0' }}
+                className="reservar-input"
               />
             </label>
 
@@ -75,7 +76,7 @@ Horario: ${horario}`);
                 value={tipoReserva}
                 onChange={(e) => setTipoReserva(e.target.value)}
                 required
-                style={inputStyle}
+                className="reservar-input"
               >
                 <option value="">Selecciona tipo</option>
                 <option value="Reunión breve">Reunión breve</option>
@@ -91,7 +92,7 @@ Horario: ${horario}`);
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
                 required
-                style={{ ...inputStyle, height: '80px', resize: 'none' }}
+                className="reservar-input"
               />
             </label>
 
@@ -102,11 +103,11 @@ Horario: ${horario}`);
                 value={horario}
                 onChange={(e) => setHorario(e.target.value)}
                 required
-                style={inputStyle}
+                className="reservar-input"
               />
             </label>
 
-            <button type="submit" style={submitButtonStyle}>
+            <button type="submit" className="reservar-boton">
               Reservar
             </button>
           </form>
@@ -119,17 +120,11 @@ Horario: ${horario}`);
 
 function EspacioImagen({ espacio }: { espacio: string }) {
   return (
-    <div style={imagenBoxStyle}>
+    <div className="reservar-imagen">
       {espacio ? (
-        <img
-          src={`/imagenes/${espacio}.jpg`}
-          alt={`Imagen de ${espacio}`}
-          style={imagenStyle}
-        />
+        <img src={`/imagenes/${espacio}.jpg`} alt={`Imagen de ${espacio}`} />
       ) : (
-        <span style={{ color: '#888', textAlign: 'center' }}>
-          Selecciona un espacio para ver la imagen
-        </span>
+        <span>Selecciona un espacio para ver la imagen</span>
       )}
     </div>
   );
@@ -137,14 +132,14 @@ function EspacioImagen({ espacio }: { espacio: string }) {
 
 function Header() {
   return (
-    <header style={headerStyle}>
-      <img src="/logo.png" alt="Logo" style={logoStyle} />
-      <nav style={navStyle}>
-        <Link to="/user-home-page" style={navLinkStyle}>Inicio</Link>
-        <Link to="/user-meeting-page" style={navLinkStyle}>Espacios de reuniones</Link>
-        <Link to="/user-reservation-page" style={navLinkStyle}>Reservar espacio</Link>
-        <Link to="/user-My-reservations-page" style={navLinkStyle}>Mis reservas</Link>
-        <Link to="/login" style={navLinkStyle}>Cerrar sesión</Link>
+    <header className="reservar-header">
+      <img src="/logo.png" alt="Logo" className="reservar-logo" />
+      <nav className="reservar-nav">
+        <Link to="/user-home-page" className="reservar-link">Inicio</Link>
+        <Link to="/user-meeting-page" className="reservar-link">Espacios de reuniones</Link>
+        <Link to="/user-reservation-page" className="reservar-link">Reservar espacio</Link>
+        <Link to="/user-My-reservations-page" className="reservar-link">Mis reservas</Link>
+        <Link to="/login" className="reservar-link">Cerrar sesión</Link>
       </nav>
     </header>
   );
@@ -152,128 +147,8 @@ function Header() {
 
 function Footer() {
   return (
-    <footer style={footerStyle}>
+    <footer className="reservar-footer">
       © 2025 GreenWork · Todos los derechos reservados
     </footer>
   );
 }
-
-// --- Estilos en línea ---
-
-const containerStyle = {
-  minHeight: '100vh',
-  width: '100vw',
-  display: 'flex',
-  flexDirection: 'column' as const,
-  fontFamily: 'Arial, sans-serif',
-  backgroundColor: 'white',
-};
-
-const headerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '15px 30px',
-  borderBottom: '1px solid #ccc',
-  backgroundColor: 'white',
-  position: 'fixed' as const,
-  top: 0,
-  left: 0,
-  right: 0,
-  zIndex: 1000,
-  flexWrap: 'wrap' as const,
-};
-
-const logoStyle = {
-  width: '120px',
-  objectFit: 'contain' as const,
-};
-
-const navStyle = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  gap: '10px',
-  marginTop: '10px',
-};
-
-const navLinkStyle = {
-  padding: '8px 12px',
-  backgroundColor: '#D9D9D9',
-  borderRadius: '8px',
-  color: 'black',
-  fontWeight: 'bold' as const,
-  textDecoration: 'none',
-  fontSize: '14px',
-};
-
-const mainStyle = {
-  marginTop: '120px',
-  flexGrow: 1,
-  padding: '20px',
-};
-
-const responsiveContainer = {
-  display: 'flex',
-  flexDirection: 'row' as const,
-  gap: '30px',
-  flexWrap: 'wrap' as const,
-  justifyContent: 'center' as const,
-  alignItems: 'stretch' as const,
-};
-
-const imagenBoxStyle = {
-  flex: '1 1 300px',
-  maxWidth: '500px',
-  backgroundColor: '#f5f5f5',
-  padding: '20px',
-  borderRadius: '10px',
-  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '300px',
-};
-
-const imagenStyle = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover' as const,
-  borderRadius: '10px',
-};
-
-const formularioStyle = {
-  flex: '1 1 300px',
-  maxWidth: '500px',
-  backgroundColor: '#f0f0f0',
-  padding: '30px',
-  borderRadius: '10px',
-  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '20px',
-};
-
-const inputStyle = {
-  width: '100%',
-  padding: '10px',
-  borderRadius: '5px',
-  border: '1px solid #ccc',
-  backgroundColor: '#D9D9D9',
-};
-
-const submitButtonStyle = {
-  padding: '10px',
-  backgroundColor: '#D9D9D9',
-  border: 'none',
-  borderRadius: '5px',
-  fontWeight: 'bold' as const,
-  cursor: 'pointer',
-};
-
-const footerStyle = {
-  backgroundColor: '#f2f2f2',
-  padding: '15px 30px',
-  textAlign: 'center' as const,
-  borderTop: '1px solid #ccc',
-  fontSize: '14px',
-};

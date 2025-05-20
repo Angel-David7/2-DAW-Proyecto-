@@ -1,106 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
-
-const navLinkStyle: React.CSSProperties = {
-  textDecoration: 'none',
-  color: '#333',
-  fontWeight: 'bold',
-  padding: '10px 15px',
-  borderRadius: '8px',
-  backgroundColor: '#eee',
-  width: '100%',
-  boxSizing: 'border-box',
-  transition: 'background-color 0.3s',
-  cursor: 'pointer',
-};
+import './inicio-admin.css';
 
 function Header() {
   return (
-    <nav
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        width: '220px',
-        backgroundColor: '#ddd',
-        padding: '30px 20px',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        alignItems: 'flex-start',
-        fontFamily: 'Arial, sans-serif',
-        zIndex: 1000,
-      }}
-    >
-      <img
-        src="/logo.png"
-        alt="Logo"
-        style={{ width: '140px', objectFit: 'contain', marginBottom: '40px' }}
-      />
-      <Link to="/admin-home-page" style={navLinkStyle}>Inicio</Link>
-      <Link to="/admin-Usermanagement-page" style={navLinkStyle}>
-        Gestionar Usuarios
-      </Link>
-      <Link to="/admin-reservations-page" style={navLinkStyle}>
-        Gestionar reservas
-      </Link>
-      <Link to="/login" style={navLinkStyle}>
-        Cerrar sesión
-      </Link>
+    <nav className="admin-nav">
+      <img src="/logo.png" alt="Logo" className="admin-logo" />
+      <Link to="/admin-home-page" className="admin-link">Inicio</Link>
+      <Link to="/admin-Usermanagement-page" className="admin-link">Gestionar Usuarios</Link>
+      <Link to="/admin-reservations-page" className="admin-link">Gestionar reservas</Link>
+      <Link to="/login" className="admin-link">Cerrar sesión</Link>
     </nav>
   );
 }
 
 function Content() {
   return (
-    <main
-      style={{
-        marginLeft: '220px',
-        padding: '40px',
-        backgroundColor: '#fafafa',
-        minHeight: 'calc(100vh - 80px)',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
-      <div
-        style={{
-          width: '90%',
-          backgroundColor: 'white',
-          borderRadius: '10px',
-          padding: '40px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-          color: '#333',
-          textAlign:'center',
-          marginLeft:'2%',
-          marginTop:'2%',
-        }}
-      >
-        <h1 style={{ fontSize: '28px', marginBottom: '20px' }}>
-          Bienvenido, Administrador
-        </h1>
+    <main className="admin-main">
+      <div className="admin-content-box">
+        <h1 className="admin-title">Bienvenido, Administrador</h1>
         <br />
-        <section style={{ marginBottom: '30px' }}>
-          <h2 style={{ fontSize: '24px', color: '#444', marginBottom: '15px' }}>
-            Gestión de Usuarios
-          </h2>
-          <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#555' }}>
+        <section className="admin-section">
+          <h2 className="admin-section-title">Gestión de Usuarios</h2>
+          <p className="admin-paragraph">
             En esta sección puedes administrar toda la información relacionada con los usuarios registrados en el sistema. 
             Tendrás la capacidad de otorgar o denegar permisos a los usuarios, permitiendo controlar qué funcionalidades pueden acceder.
             Esta gestión es fundamental para mantener la seguridad y el orden en el acceso al sistema, asegurando que solo usuarios autorizados puedan utilizar las funciones disponibles.
           </p>
         </section>
 
-        <section>
-          <h2 style={{ fontSize: '24px', color: '#444', marginBottom: '15px' }}>
-            Gestión de Reservas
-          </h2>
-          <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#555' }}>
+        <section className="admin-section">
+          <h2 className="admin-section-title">Gestión de Reservas</h2>
+          <p className="admin-paragraph">
             Aquí podrás supervisar todas las reservas realizadas por los usuarios para diferentes espacios o recursos. 
             Puedes ver la lista completa de reservas, eliminar las reservas que consideres necesarias, y acceder a la información detallada de cada una al pulsar el botón "Ver".
             Además, tienes la posibilidad de modificar cualquier reserva para ajustar fechas, horarios u otros detalles relevantes.
@@ -114,28 +45,18 @@ function Content() {
 
 function Footer() {
   return (
-    <footer
-      style={{
-        marginLeft: '220px',
-        backgroundColor: '#f2f2f2',
-        padding: '15px 30px',
-        textAlign: 'center',
-        borderTop: '1px solid #ccc',
-        fontSize: '14px',
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
+    <footer className="admin-footer">
       © 2025 GreenWork · Todos los derechos reservados
     </footer>
   );
 }
-
 export default function InicioAdmin() {
   return (
-    <>
+    <div className="inicio-admin-wrapper">
       <Header />
       <Content />
       <Footer />
-    </>
+    </div>
   );
 }
+

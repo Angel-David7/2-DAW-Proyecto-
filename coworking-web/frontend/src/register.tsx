@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './index.css';
+import './register.css';
 
 export default function Register() {
   const [leyAceptada, setLeyAceptada] = useState(false);
@@ -16,213 +16,89 @@ export default function Register() {
   };
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100vw',
-        backgroundColor: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
+    <div className="register-container">
       {/* Imagen a la izquierda */}
-      <div style={{ marginRight: '300px', marginBottom: '120px' }}>
-        <img
-          src="/logo.png"
-          alt="Logo"
-          style={{
-            width: '700px',
-            height: 'auto',
-            imageRendering: 'crisp-edges',
-            objectFit: 'contain',
-          }}
-        />
+      <div>
+        <img src="/logo.png" alt="Logo" className="register-logo" />
       </div>
 
       {/* Formulario a la derecha */}
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          width: '500px',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '32px',
-            color: 'black',
-            marginBottom: '30px',
-            textAlign: 'center',
-            marginLeft: '10px',
-          }}
-        >
-          Registrar
-        </h1>
-
-        <hr
-          style={{
-            width: '100%',
-            height: '2px',
-            backgroundColor: 'black',
-            border: 'none',
-            marginBottom: '40px',
-          }}
-        />
+      <form onSubmit={handleSubmit} className="register-form">
+        <h1>Registro</h1>
+        <hr />
 
         {/* Nombre */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="fullName" style={{ fontWeight: 'bold', color: 'black' }}>
-            Nombre Completo:
-          </label>
+        <div className="field">
+          <label htmlFor="fullName">Nombre Completo:</label>
           <input
             id="fullName"
             type="text"
             placeholder="Introduce tu nombre completo"
-            style={{
-              backgroundColor: '#D9D9D9',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-            }}
             required
           />
         </div>
 
         {/* Teléfono */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="phone" style={{ fontWeight: 'bold', color: 'black' }}>
-            Teléfono:
-          </label>
+        <div className="field">
+          <label htmlFor="phone">Teléfono:</label>
           <input
             id="phone"
             type="tel"
             placeholder="Introduce tu teléfono"
-            style={{
-              backgroundColor: '#D9D9D9',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-            }}
             required
           />
         </div>
 
         {/* Correo */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="email" style={{ fontWeight: 'bold', color: 'black' }}>
-            Correo:
-          </label>
+        <div className="field">
+          <label htmlFor="email">Correo:</label>
           <input
             id="email"
             type="email"
             placeholder="Introduce tu correo"
-            style={{
-              backgroundColor: '#D9D9D9',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-            }}
             required
           />
         </div>
 
         {/* Contraseña */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="password" style={{ fontWeight: 'bold', color: 'black' }}>
-            Contraseña:
-          </label>
+        <div className="field">
+          <label htmlFor="password">Contraseña:</label>
           <input
             id="password"
             type="password"
             placeholder="Introduce tu contraseña"
-            style={{
-              backgroundColor: '#D9D9D9',
-              padding: '10px',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-            }}
             required
           />
         </div>
 
         {/* Ley de Protección de Datos */}
         <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            fontSize: '15px',
-            color: 'black',
-            marginLeft: '40px',
-            marginTop: '10px',
-          }}
+          className="register-privacy"
+          onClick={() => setMostrarModal(true)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') setMostrarModal(true)}}
         >
           <input
             type="checkbox"
             checked={leyAceptada}
             readOnly
-            onClick={(e) => {
-              e.preventDefault();
-              setMostrarModal(true);
-            }}
           />
           <label>
             Acepto la{' '}
-            <span
-              onClick={() => setMostrarModal(true)}
-              style={{ textDecoration: 'underline', cursor: 'pointer', fontWeight: 'bold' }}
-            >
+            <span className="underline-link">
               Ley de Protección de Datos
             </span>
           </label>
         </div>
 
         {/* Ya tienes cuenta */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '10px',
-            fontSize: '17px',
-            color: 'black',
-            marginBottom: '0px',
-            marginTop: '30px',
-            marginLeft: '40px',
-          }}
-        >
+        <div className="register-login">
           <span>¿Ya tienes una cuenta?</span>
-          <Link
-            to="/login"
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-            }}
-          >
-            Entra Aquí
-          </Link>
+          <Link to="/login">Entra Aquí</Link>
         </div>
 
-        <button
-          type="submit"
-          style={{
-            width: '200px',
-            padding: '10px',
-            borderRadius: '5px',
-            backgroundColor: '#D9D9D9',
-            color: 'black',
-            fontWeight: 'bold',
-            border: 'none',
-            cursor: 'pointer',
-            marginTop: '10px',
-            marginLeft: '170px',
-          }}
-        >
+        <button type="submit" className="register-button">
           Registrar
         </button>
       </form>
@@ -230,33 +106,12 @@ export default function Register() {
       {/* Modal */}
       {mostrarModal && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1000,
-          }}
+          className="modal-backdrop"
           onClick={() => setMostrarModal(false)}
         >
           <div
+            className="modal-content"
             onClick={(e) => e.stopPropagation()}
-            style={{
-              backgroundColor: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              width: '400px',
-              maxHeight: '80vh',
-              overflowY: 'auto',
-              boxShadow: '0 0 15px rgba(0,0,0,0.3)',
-              fontSize: '14px',
-              color: 'black',
-            }}
           >
             <h2>Ley de Protección de Datos</h2>
             <p style={{ textAlign: 'justify' }}>
@@ -264,16 +119,10 @@ export default function Register() {
               Al aceptar, consientes que tus datos se utilicen con fines administrativos y de comunicación interna.
               Para más detalles, consulta nuestra política de privacidad completa.
             </p>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', gap: '10px' }}>
+            <div className="modal-buttons">
               <button
                 onClick={() => setMostrarModal(false)}
-                style={{
-                  backgroundColor: '#ccc',
-                  border: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
+                className="modal-cancel"
               >
                 Cancelar
               </button>
@@ -282,14 +131,7 @@ export default function Register() {
                   setLeyAceptada(true);
                   setMostrarModal(false);
                 }}
-                style={{
-                  backgroundColor: '#4CAF50',
-                  color: 'white',
-                  border: 'none',
-                  padding: '8px 16px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
+                className="modal-accept"
               >
                 Aceptar
               </button>
