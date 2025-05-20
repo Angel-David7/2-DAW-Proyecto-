@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+import { Link } from 'react-router-dom';
+
 // Estilo común para enlaces de navegación
 const navLinkStyle = {
   padding: '8px 12px',
@@ -34,11 +36,11 @@ function Header() {
     >
       <img src="/logo.png" alt="Logo" style={{ width: '120px', objectFit: 'contain' }} />
       <nav style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-        <a href="/iniciousuario.html" style={navLinkStyle}>Inicio</a>
-        <a href="./ver-espacios.html" style={navLinkStyle}>Espacios de reuniones</a>
-        <a href="/Reservar-espacio.html" style={navLinkStyle}>Reservar espacio</a>
-        <a href="/mis-reservas.html" style={navLinkStyle}>Mis reservas</a>
-        <a href="/login.html" style={navLinkStyle}>Cerrar sesión</a>
+        <Link to="/user-home-page" style={navLinkStyle}>Inicio</Link>
+        <Link to="/user-meeting-page" style={navLinkStyle}>Espacios de reuniones</Link>
+        <Link to="/user-reservation-page" style={navLinkStyle}>Reservar espacio</Link>
+        <Link to="/user-My-reservations-page" style={navLinkStyle}>Mis reservas</Link>
+        <Link to="/login" style={navLinkStyle}>Cerrar sesión</Link>
       </nav>
     </header>
   );
@@ -80,7 +82,7 @@ function EspacioCard({ nombre, descripcion }: { nombre: string; descripcion: str
     >
       <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>{nombre}</h3>
       <p style={{ fontSize: '14px', lineHeight: 1.4, color: '#555' }}>{descripcion}</p>
-      <a href="/Reservar-espacio.html" style={{ marginTop: 'auto', textAlign: 'center' }}>
+      <Link to="/reservar-espacio" style={{ marginTop: 'auto', textAlign: 'center' }}>
         <button
           style={{
             padding: '8px 12px',
@@ -94,12 +96,12 @@ function EspacioCard({ nombre, descripcion }: { nombre: string; descripcion: str
         >
           Reservar espacio
         </button>
-      </a>
+      </Link>
     </div>
   );
 }
 
-// Contenido principal, con bienvenida, reservas y espacios destacados en tarjetas
+// Contenido principal
 function Contenido({ nombreUsuario }: { nombreUsuario: string }) {
   const espacios = [
     { nombre: 'Escritorio Flex', descripcion: 'Ideal para trabajo individual y flexible.' },
@@ -163,8 +165,8 @@ function Contenido({ nombreUsuario }: { nombreUsuario: string }) {
   );
 }
 
-// App principal
-function App() {
+// Componente principal
+export default function InicioUsuario() {
   const usuarioReal = 'Belinda';
 
   return (
@@ -185,12 +187,12 @@ function App() {
   );
 }
 
-// Renderizado
+// Renderizado (puede estar en index.tsx o main.tsx, no dentro del componente)
 const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-      <App />
+      <InicioUsuario />
     </StrictMode>
   );
 } else {

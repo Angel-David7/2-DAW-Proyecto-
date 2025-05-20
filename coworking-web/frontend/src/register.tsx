@@ -1,8 +1,8 @@
-import { StrictMode, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './index.css';
 
-function App() {
+export default function Register() {
   const [leyAceptada, setLeyAceptada] = useState(false);
   const [mostrarModal, setMostrarModal] = useState(false);
 
@@ -73,15 +73,9 @@ function App() {
           }}
         />
 
-        {/* Campo Nombre Completo */}
+        {/* Nombre */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="fullName"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >
+          <label htmlFor="fullName" style={{ fontWeight: 'bold', color: 'black' }}>
             Nombre Completo:
           </label>
           <input
@@ -98,15 +92,9 @@ function App() {
           />
         </div>
 
-        {/* Campo Teléfono */}
+        {/* Teléfono */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="phone"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >
+          <label htmlFor="phone" style={{ fontWeight: 'bold', color: 'black' }}>
             Teléfono:
           </label>
           <input
@@ -123,15 +111,9 @@ function App() {
           />
         </div>
 
-        {/* Campo Correo */}
+        {/* Correo */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="email"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >
+          <label htmlFor="email" style={{ fontWeight: 'bold', color: 'black' }}>
             Correo:
           </label>
           <input
@@ -148,15 +130,9 @@ function App() {
           />
         </div>
 
-        {/* Campo Contraseña */}
+        {/* Contraseña */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="password"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-            }}
-          >
+          <label htmlFor="password" style={{ fontWeight: 'bold', color: 'black' }}>
             Contraseña:
           </label>
           <input
@@ -173,7 +149,7 @@ function App() {
           />
         </div>
 
-        {/* Checkbox Ley Protección de Datos */}
+        {/* Ley de Protección de Datos */}
         <div
           style={{
             display: 'flex',
@@ -220,17 +196,16 @@ function App() {
           }}
         >
           <span>¿Ya tienes una cuenta?</span>
-          <a
-            href="/login.html"
-            rel="noopener noreferrer"
+          <Link
+            to="/login"
             style={{
               color: 'black',
               fontWeight: 'bold',
               textDecoration: 'underline',
             }}
           >
-            Entra Aquí?
-          </a>
+            Entra Aquí
+          </Link>
         </div>
 
         <button
@@ -252,7 +227,7 @@ function App() {
         </button>
       </form>
 
-      {/* Modal Ley de Protección de Datos */}
+      {/* Modal */}
       {mostrarModal && (
         <div
           style={{
@@ -325,9 +300,3 @@ function App() {
     </div>
   );
 }
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);

@@ -128,6 +128,12 @@ function Content() {
 
         {editMode ? (
           <form onSubmit={handleGuardar} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <label>Nombre del usuario:
+              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+            </label>
+            <label>Email:
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </label> 
             <label>Fecha:
               <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </label>
@@ -143,25 +149,22 @@ function Content() {
             <label>Descripción:
               <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
             </label>
-            <label>Nombre del usuario:
-              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-            </label>
-            <label>Email:
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </label>
+           
             <button type="submit" style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px' }}>
               Guardar cambios
             </button>
           </form>
         ) : (
           <>
+            <p><strong>👤 Usuario:</strong> {nombre}</p>
+            <p><strong>📧 Email:</strong> {email}</p>
+            <hr style={{ margin: '20px 0' }} />
             <p><strong>📅 Fecha:</strong> {fecha}</p>
             <p><strong>🕒 Horario:</strong> {horaInicio} - {horaFin}</p>
             <p><strong>🏢 Espacio:</strong> {espacio}</p>
             <p><strong>📝 Descripción:</strong> {descripcion}</p>
-            <hr style={{ margin: '20px 0' }} />
-            <p><strong>👤 Usuario:</strong> {nombre}</p>
-            <p><strong>📧 Email:</strong> {email}</p>
+            
+            
 
             <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
               <button
