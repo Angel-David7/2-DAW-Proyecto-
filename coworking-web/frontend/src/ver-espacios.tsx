@@ -1,8 +1,5 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
+import { Link } from 'react-router-dom';
 
-// Estilo común para los enlaces de navegación
 const navLinkStyle = {
   padding: '8px 12px',
   backgroundColor: '#D9D9D9',
@@ -13,7 +10,6 @@ const navLinkStyle = {
   fontSize: '14px',
 };
 
-// Componente Header (responsive, igual que tu ejemplo)
 function Header() {
   return (
     <header
@@ -35,17 +31,16 @@ function Header() {
     >
       <img src="/logo.png" alt="Logo" style={{ width: '120px', objectFit: 'contain' }} />
       <nav style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                    <a href="/iniciousuario.html" style={navLinkStyle}>Inicio</a>
-                    <a href='./ver-espacios.html'style={navLinkStyle}>Espacios de reuniones</a>
-                    <a href="/Reservar-espacio.html" style={navLinkStyle}>Reservar espacio</a>
-                    <a href="/mis-reservas.html" style={navLinkStyle}>Mis reservas</a>
-                    <a href="/login.html" style={navLinkStyle}>Cerrar sesión</a>
-                </nav>
+        <Link to="/user-home-page" style={navLinkStyle}>Inicio</Link>
+        <Link to="/user-meeting-page" style={navLinkStyle}>Espacios de reuniones</Link>
+        <Link to="/user-reservation-page" style={navLinkStyle}>Reservar espacio</Link>
+        <Link to="/user-My-reservations-page" style={navLinkStyle}>Mis reservas</Link>
+        <Link to="/login" style={navLinkStyle}>Cerrar sesión</Link>
+      </nav>
     </header>
   );
 }
 
-// Componente Footer
 function Footer() {
   return (
     <footer
@@ -55,6 +50,7 @@ function Footer() {
         textAlign: 'center',
         borderTop: '1px solid #ccc',
         fontSize: '14px',
+        marginTop: 'auto',
       }}
     >
       © 2025 GreenWork · Todos los derechos reservados
@@ -62,7 +58,6 @@ function Footer() {
   );
 }
 
-// Componente para cada espacio
 function EspacioCard({ nombre, imagen }: { nombre: string; imagen: string }) {
   return (
     <div
@@ -81,7 +76,7 @@ function EspacioCard({ nombre, imagen }: { nombre: string; imagen: string }) {
       <img src={imagen} alt={nombre} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
       <div style={{ padding: '15px', textAlign: 'center' }}>
         <h3 style={{ margin: '10px 0', color: '#333' }}>{nombre}</h3>
-        <a href="/Reservar-espacio.html">
+        <Link to="/reservar-espacio">
           <button
             style={{
               padding: '8px 12px',
@@ -94,14 +89,13 @@ function EspacioCard({ nombre, imagen }: { nombre: string; imagen: string }) {
           >
             Reservar espacio
           </button>
-        </a>
+        </Link>
       </div>
     </div>
   );
 }
 
-// Componente Contenido principal
-function Contenido() {
+export default function EspaciosReuniones() {
   const espacios = [
     { nombre: 'Sala A', imagen: '/imagenes/SalaA.jpg' },
     { nombre: 'Sala B', imagen: '/imagenes/SalaB.jpg' },
@@ -109,44 +103,6 @@ function Contenido() {
     { nombre: 'Sala de Conferencias', imagen: '/imagenes/Conferencia.jpg' },
   ];
 
-  return (
-    <main
-      style={{
-        marginTop: '120px',
-        flexGrow: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
-      }}
-    >
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '30px', color: '#333' }}>
-        Espacios de reuniones
-      </h1>
-      <div
-        style={{
-          width: '90%',
-          maxWidth: '1200px',
-          backgroundColor: '#f0f0f0',
-          border: '1px solid #ccc',
-          borderRadius: '10px',
-          padding: '20px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '20px',
-        }}
-      >
-        {espacios.map((espacio, index) => (
-          <EspacioCard key={index} nombre={espacio.nombre} imagen={espacio.imagen} />
-        ))}
-      </div>
-    </main>
-  );
-}
-
-// Componente principal App
-function App() {
   return (
     <div
       style={{
@@ -159,20 +115,39 @@ function App() {
       }}
     >
       <Header />
-      <Contenido />
+      <main
+        style={{
+          marginTop: '120px',
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '20px',
+        }}
+      >
+        <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '30px', color: '#333' }}>
+          Espacios de reuniones
+        </h1>
+        <div
+          style={{
+            width: '90%',
+            maxWidth: '1200px',
+            backgroundColor: '#f0f0f0',
+            border: '1px solid #ccc',
+            borderRadius: '10px',
+            padding: '20px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '20px',
+          }}
+        >
+          {espacios.map((espacio, index) => (
+            <EspacioCard key={index} nombre={espacio.nombre} imagen={espacio.imagen} />
+          ))}
+        </div>
+      </main>
       <Footer />
     </div>
   );
-}
-
-// Renderizado
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
-} else {
-  console.error("No se encontró el elemento con id 'root'");
 }

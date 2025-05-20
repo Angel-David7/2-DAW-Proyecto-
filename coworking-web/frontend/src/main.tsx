@@ -1,57 +1,41 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
-// Definimos el componente App aquí directamente
-function App() {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100vw',
-        backgroundColor: '#C2BEBE',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <img
-        src="/logo.png"
-        alt="Logo"
-        style={{
-          maxWidth: '50%',
-          height: '50%',
-          objectFit: 'contain',
-          position: 'relative',
-          top: '-110px',
-        }}
-      />
-      <a
-        href="/login.html"
-       
-        rel="noopener noreferrer"
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: '70%',
-          transform: 'translateX(-50%)',
-          padding: '12px 24px',
-          backgroundColor: 'white',
-          color: 'black',
-          borderRadius: '9999px',
-          fontWeight: 'bold',
-          textDecoration: 'none',
-        }}
-      >
-        Login
-      </a>
-    </div>
-  );
-}
+// Importa tus páginas
+import App from "./index.tsx";
+import Login from "./login";
+import Registrate from "./register";
+import InicioUsuario from "./iniciousuario";
+import EspaciosReuniones from './ver-espacios';
+import ReservarEspacio from './Reservar-espacio';
+import MisReservas from './mis-reservas';
+import AdminInicio  from "./inicio-admin.tsx";
+import GestionUsuarios from "./Gestion-usuarios.tsx";
+import Gestionarreservas from "./Gestionar-reservas.tsx";
 
-// Montamos la app
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+// Define rutas
+const router = createBrowserRouter([
+  { path: "/", element: <App /> },
+  { path: "/login", element: <Login /> },
+  {path: "/register", element: <Registrate />},
+  {path: "/user-home-page", element: <InicioUsuario />},
+  {path:"/user-meeting-page", element:<EspaciosReuniones />},
+  {path:"/user-reservation-page", element:<ReservarEspacio />},
+  {path:"/user-My-reservations-page", element:<MisReservas />},
+
+  {path:"/admin-home-page", element:<AdminInicio />},
+  {path:"/admin-Usermanagement-page", element:<GestionUsuarios />},
+  {path:"/admin-reservations-page", element:<Gestionarreservas />},
+
+]);
+
+// Renderizado
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );

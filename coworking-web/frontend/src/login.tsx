@@ -1,8 +1,8 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
 import './index.css';
+import { Link } from 'react-router-dom';
 
-function App() {
+export default function Login() {
   return (
     <div
       style={{
@@ -23,14 +23,13 @@ function App() {
           style={{
             width: '700px',
             height: 'auto',
-            imageRendering: 'crisp-edges', // evita desenfoque
+            imageRendering: 'crisp-edges',
             objectFit: 'contain',
           }}
         />
-
       </div>
 
-      {/* Formulario a la derecha */}
+      {/* Formulario */}
       <form
         style={{
           display: 'flex',
@@ -39,41 +38,15 @@ function App() {
           width: '500px',
         }}
       >
-        <h1
-          style={{
-            fontSize: '32px',
-            color: 'black',
-            marginBottom: '50px',
-            textAlign: 'center',
-            marginLeft: '35px',
-
-          }}
-        >
+        <h1 style={{ fontSize: '32px', color: 'black', marginBottom: '50px', textAlign: 'center', marginLeft: '35px' }}>
           Iniciar sesión
         </h1>
 
-        <hr
-          style={{
-            width: '100%',
-            height: '2px',
-            backgroundColor: 'black',
-            border: 'none',
-            marginBottom: '80px',
-          }}
-        />
+        <hr style={{ width: '100%', height: '2px', backgroundColor: 'black', border: 'none', marginBottom: '80px' }} />
 
         {/* Campo Correo */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="email"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-             
-            }}
-          >
-            Correo:
-          </label>
+          <label htmlFor="email" style={{ fontWeight: 'bold', color: 'black' }}>Correo:</label>
           <input
             id="email"
             type="email"
@@ -89,16 +62,7 @@ function App() {
 
         {/* Campo Contraseña */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label
-            htmlFor="password"
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-              
-            }}
-          >
-            Contraseña:
-          </label>
+          <label htmlFor="password" style={{ fontWeight: 'bold', color: 'black' }}>Contraseña:</label>
           <input
             id="password"
             type="password"
@@ -111,6 +75,7 @@ function App() {
             }}
           />
         </div>
+
         <div
           style={{
             display: 'flex',
@@ -125,9 +90,8 @@ function App() {
           }}
         >
           <span>¿Es tu primera vez?</span>
-          <a
-            href="/registrate.html"
-            rel="noopener noreferrer"
+          <Link
+            to="/register"
             style={{
               color: 'black',
               fontWeight: 'bold',
@@ -135,10 +99,8 @@ function App() {
             }}
           >
             Regístrate
-          </a>
+          </Link>
         </div>
-
-
 
         <button
           type="submit"
@@ -151,20 +113,13 @@ function App() {
             fontWeight: 'bold',
             border: 'none',
             cursor: 'pointer',
-            marginTop: '10px', // Mucho más pegado
+            marginTop: '10px',
             marginLeft: '170px',
           }}
         >
           Iniciar Sesión
         </button>
-
       </form>
     </div>
   );
 }
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);

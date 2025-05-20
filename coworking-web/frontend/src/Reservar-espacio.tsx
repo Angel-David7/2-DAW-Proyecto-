@@ -1,9 +1,37 @@
-import { StrictMode, useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-function App() {
+export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
+  const [costo, setCosto] = useState('');
+  const [tipoReserva, setTipoReserva] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [horario, setHorario] = useState('');
+
+  const costosPorEspacio: Record<string, string> = {
+    'Sala A': '200',
+    'Sala B': '150',
+    'Auditorio': '300',
+    'Sala de Conferencias': '250',
+  };
+
+  useEffect(() => {
+    if (espacioSeleccionado && costosPorEspacio[espacioSeleccionado]) {
+      setCosto(costosPorEspacio[espacioSeleccionado]);
+    } else {
+      setCosto('');
+    }
+  }, [espacioSeleccionado]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Reserva enviada correctamente:
+Espacio: ${espacioSeleccionado}
+Costo: $${costo}
+Tipo: ${tipoReserva}
+Descripción: ${descripcion}
+Horario: ${horario}`);
+  };
 
   return (
     <div style={containerStyle}>
@@ -11,30 +39,81 @@ function App() {
       <main style={mainStyle}>
         <div style={responsiveContainer}>
           <EspacioImagen espacio={espacioSeleccionado} />
-          <FormularioReserva
-            espacio={espacioSeleccionado}
-            setEspacio={setEspacioSeleccionado}
-          />
+          <form onSubmit={handleSubmit} style={formularioStyle}>
+            <h2 style={{ textAlign: 'center', color: '#333' }}>Reserva de Espacio</h2>
+
+            <label>
+              Espacio:
+              <select
+                value={espacioSeleccionado}
+                onChange={(e) => setEspacioSeleccionado(e.target.value)}
+                required
+                style={inputStyle}
+              >
+                <option value="">Selecciona un espacio</option>
+                {Object.keys(costosPorEspacio).map((espacio) => (
+                  <option key={espacio} value={espacio}>
+                    {espacio}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              Costo:
+              <input
+                type="text"
+                value={costo ? `$${costo}` : ''}
+                readOnly
+                style={{ ...inputStyle, backgroundColor: '#e0e0e0' }}
+              />
+            </label>
+
+            <label>
+              Tipo de reserva:
+              <select
+                value={tipoReserva}
+                onChange={(e) => setTipoReserva(e.target.value)}
+                required
+                style={inputStyle}
+              >
+                <option value="">Selecciona tipo</option>
+                <option value="Reunión breve">Reunión breve</option>
+                <option value="Presentación">Presentación</option>
+                <option value="Videollamada">Videollamada</option>
+                <option value="Sesión creativa">Sesión creativa</option>
+              </select>
+            </label>
+
+            <label>
+              Descripción:
+              <textarea
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                required
+                style={{ ...inputStyle, height: '80px', resize: 'none' }}
+              />
+            </label>
+
+            <label>
+              Horario:
+              <input
+                type="datetime-local"
+                value={horario}
+                onChange={(e) => setHorario(e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </label>
+
+            <button type="submit" style={submitButtonStyle}>
+              Reservar
+            </button>
+          </form>
         </div>
       </main>
       <Footer />
     </div>
-  );
-}
-
-function Header() {
-  return (
-    <header style={headerStyle}>
-      <img src="/logo.png" alt="Logo" style={logoStyle} />
-      <nav style={navStyle}>
-       
-                    <a href="/iniciousuario.html" style={navLinkStyle}>Inicio</a>
-                    <a href='./ver-espacios.html'style={navLinkStyle}>Espacios de reuniones</a>
-                    <a href="/Reservar-espacio.html" style={navLinkStyle}>Reservar espacio</a>
-                    <a href="/mis-reservas.html" style={navLinkStyle}>Mis reservas</a>
-                    <a href="/login.html" style={navLinkStyle}>Cerrar sesión</a>
-                </nav>
-    </header>
   );
 }
 
@@ -56,114 +135,18 @@ function EspacioImagen({ espacio }: { espacio: string }) {
   );
 }
 
-function FormularioReserva({
-  espacio,
-  setEspacio,
-}: {
-  espacio: string;
-  setEspacio: (value: string) => void;
-}) {
-  const [costo, setCosto] = useState('');
-  const [tipoReserva, setTipoReserva] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [horario, setHorario] = useState('');
-
-  const costosPorEspacio: Record<string, string> = {
-    'Sala A': '200',
-    'Sala B': '150',
-    'Auditorio': '300',
-    'Sala de Conferencias': '250',
-  };
-
-  useEffect(() => {
-    if (espacio && costosPorEspacio[espacio]) {
-      setCosto(costosPorEspacio[espacio]);
-    } else {
-      setCosto('');
-    }
-  }, [espacio]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert(`Reserva enviada correctamente:
-Espacio: ${espacio}
-Costo: $${costo}
-Tipo: ${tipoReserva}
-Descripción: ${descripcion}
-Horario: ${horario}`);
-  };
-
+function Header() {
   return (
-    <form onSubmit={handleSubmit} style={formularioStyle}>
-      <h2 style={{ textAlign: 'center', color: '#333' }}>Reserva de Espacio</h2>
-
-      <label>
-        Espacio:
-        <select
-          value={espacio}
-          onChange={(e) => setEspacio(e.target.value)}
-          required
-          style={inputStyle}
-        >
-          <option value="">Selecciona un espacio</option>
-          <option value="Sala A">Sala A</option>
-          <option value="Sala B">Sala B</option>
-          <option value="Auditorio">Auditorio</option>
-          <option value="Sala de Conferencias">Sala de Conferencias</option>
-        </select>
-      </label>
-
-      <label>
-        Costo:
-        <input
-          type="text"
-          value={costo ? `$${costo}` : ''}
-          readOnly
-          style={{ ...inputStyle, backgroundColor: '#e0e0e0' }}
-        />
-      </label>
-
-      <label>
-        Tipo de reserva:
-        <select
-          value={tipoReserva}
-          onChange={(e) => setTipoReserva(e.target.value)}
-          required
-          style={inputStyle}
-        >
-          <option value="">Selecciona tipo</option>
-          <option value="Reunión breve">Reunión breve</option>
-          <option value="Presentación">Presentación</option>
-          <option value="Videollamada">Videollamada</option>
-          <option value="Sesión creativa">Sesión creativa</option>
-        </select>
-      </label>
-
-      <label>
-        Descripción:
-        <textarea
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          required
-          style={{ ...inputStyle, height: '80px', resize: 'none' }}
-        />
-      </label>
-
-      <label>
-        Horario:
-        <input
-          type="datetime-local"
-          value={horario}
-          onChange={(e) => setHorario(e.target.value)}
-          required
-          style={inputStyle}
-        />
-      </label>
-
-      <button type="submit" style={submitButtonStyle}>
-        Reservar
-      </button>
-    </form>
+    <header style={headerStyle}>
+      <img src="/logo.png" alt="Logo" style={logoStyle} />
+      <nav style={navStyle}>
+        <Link to="/user-home-page" style={navLinkStyle}>Inicio</Link>
+        <Link to="/user-meeting-page" style={navLinkStyle}>Espacios de reuniones</Link>
+        <Link to="/user-reservation-page" style={navLinkStyle}>Reservar espacio</Link>
+        <Link to="/user-My-reservations-page" style={navLinkStyle}>Mis reservas</Link>
+        <Link to="/login" style={navLinkStyle}>Cerrar sesión</Link>
+      </nav>
+    </header>
   );
 }
 
@@ -175,7 +158,7 @@ function Footer() {
   );
 }
 
-// --- Estilos responsivos y reutilizables ---
+// --- Estilos en línea ---
 
 const containerStyle = {
   minHeight: '100vh',
@@ -188,7 +171,6 @@ const containerStyle = {
 
 const headerStyle = {
   display: 'flex',
-  flexDirection: 'row' as const,
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '15px 30px',
@@ -295,15 +277,3 @@ const footerStyle = {
   borderTop: '1px solid #ccc',
   fontSize: '14px',
 };
-
-// --- Renderizado ---
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
-} else {
-  console.error("No se encontró el elemento con id 'root'");
-}

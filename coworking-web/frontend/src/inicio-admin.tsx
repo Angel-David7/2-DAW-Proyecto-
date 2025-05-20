@@ -1,5 +1,6 @@
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './index.css';
 
 const navLinkStyle: React.CSSProperties = {
   textDecoration: 'none',
@@ -39,37 +40,17 @@ function Header() {
         alt="Logo"
         style={{ width: '140px', objectFit: 'contain', marginBottom: '40px' }}
       />
-      <a href="/inicio-admin.html" style={navLinkStyle}>
-        Inicio
-      </a>
-      <a href="./Gestion-usuarios.html" style={navLinkStyle}>
+      <Link to="/admin-home-page" style={navLinkStyle}>Inicio</Link>
+      <Link to="/admin-Usermanagement-page" style={navLinkStyle}>
         Gestionar Usuarios
-      </a>
-      <a href="./Gestionar-reservas.html" style={navLinkStyle}>
+      </Link>
+      <Link to="/admin-reservations-page" style={navLinkStyle}>
         Gestionar reservas
-      </a>
-      <a href="/login.html" style={navLinkStyle}>
+      </Link>
+      <Link to="/login" style={navLinkStyle}>
         Cerrar sesión
-      </a>
+      </Link>
     </nav>
-  );
-}
-
-function Footer() {
-  return (
-    <footer
-      style={{
-        marginLeft: '220px',
-        backgroundColor: '#f2f2f2',
-        padding: '15px 30px',
-        textAlign: 'center',
-        borderTop: '1px solid #ccc',
-        fontSize: '14px',
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
-      © 2025 GreenWork · Todos los derechos reservados
-    </footer>
   );
 }
 
@@ -80,30 +61,30 @@ function Content() {
         marginLeft: '220px',
         padding: '40px',
         backgroundColor: '#fafafa',
-        minHeight: 'calc(100vh - 60px)',
+        minHeight: 'calc(100vh - 80px)',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         fontFamily: 'Arial, sans-serif',
       }}
     >
       <div
         style={{
-          maxWidth: '900px',
-          width: '100%',
+          width: '90%',
           backgroundColor: 'white',
           borderRadius: '10px',
           padding: '40px',
           boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
           color: '#333',
-          textAlign: 'center',
+          textAlign:'center',
+          marginLeft:'2%',
+          marginTop:'2%',
         }}
       >
         <h1 style={{ fontSize: '28px', marginBottom: '20px' }}>
           Bienvenido, Administrador
         </h1>
-       <br/>
+        <br />
         <section style={{ marginBottom: '30px' }}>
           <h2 style={{ fontSize: '24px', color: '#444', marginBottom: '15px' }}>
             Gestión de Usuarios
@@ -131,7 +112,25 @@ function Content() {
   );
 }
 
-function App() {
+function Footer() {
+  return (
+    <footer
+      style={{
+        marginLeft: '220px',
+        backgroundColor: '#f2f2f2',
+        padding: '15px 30px',
+        textAlign: 'center',
+        borderTop: '1px solid #ccc',
+        fontSize: '14px',
+        fontFamily: 'Arial, sans-serif',
+      }}
+    >
+      © 2025 GreenWork · Todos los derechos reservados
+    </footer>
+  );
+}
+
+export default function InicioAdmin() {
   return (
     <>
       <Header />
@@ -139,15 +138,4 @@ function App() {
       <Footer />
     </>
   );
-}
-
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
-} else {
-  console.error("No se encontró el elemento con id 'root'");
 }
