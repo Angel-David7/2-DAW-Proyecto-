@@ -4,7 +4,8 @@
   "scripts": {
     "bootstrap": "bash ../bootstrap.sh",
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "dev": "nodemon src/app.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -12,7 +13,10 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
-    "pg": "^8.16.0"
+    "pg": "^8.16.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.7.0",
