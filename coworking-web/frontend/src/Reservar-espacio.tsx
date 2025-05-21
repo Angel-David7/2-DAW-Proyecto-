@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './ReservarEspacio.css';
+import'./reservarespacio.css';
 
 export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
@@ -134,7 +134,7 @@ function Header() {
   return (
     <header className="reservar-header">
       <img src="/logo.png" alt="Logo" className="reservar-logo" />
-      <nav className="reservar-nav">
+      <nav className="reservar-nav1">
         <Link to="/user-home-page" className="reservar-link">Inicio</Link>
         <Link to="/user-meeting-page" className="reservar-link">Espacios de reuniones</Link>
         <Link to="/user-reservation-page" className="reservar-link">Reservar espacio</Link>

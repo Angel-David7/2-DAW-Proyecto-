@@ -1,5 +1,5 @@
 .container {
-  height: 97vh;      /* 90% de la altura de la ventana, ajusta según quieras */
+  height: 99vh;      
   width: 215vh;
   max-width: 100%;
   background-color: #C2BEBE;
@@ -22,10 +22,10 @@
   top: -110px;
 }
 
-.login-link {
+.login-link1 {
   position: absolute;
   left: 50%;
-  top: 70%;
+  top: 80%;
   transform: translateX(-50%);
   padding: 12px 24px;
   background-color: white;
