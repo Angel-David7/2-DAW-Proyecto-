@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './iniciousuario.css';
 import { Link } from 'react-router-dom';
 
-const navLinkClass = "nav-link";
+const navLinkClass = "nav-link1";
 
 function Header() {
   return (
@@ -42,7 +42,7 @@ function Contenido({ nombreUsuario }: { nombreUsuario: string }) {
   ];
 
   return (
-    <main className="main-content">
+    <main className="main-content1">
       <h1>¡Bienvenido/a, {nombreUsuario}!</h1>
 
       <section className="section">

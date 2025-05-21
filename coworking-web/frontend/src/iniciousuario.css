@@ -10,7 +10,7 @@
 }
 
 /* Header */
-.inicio-header {
+.inicio-header  {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -37,7 +37,7 @@
   flex-wrap: wrap;
 }
 
-.nav-link {
+.nav-link1 {
   padding: 8px 12px;
   background-color: #d9d9d9;
   border-radius: 8px;
@@ -55,7 +55,6 @@
   border-top: 1px solid #ccc;
   font-size: 14px;
   margin-top: auto;
-  
 }
 
 /* Espacio Card */
@@ -95,24 +94,30 @@
 }
 
 /* Contenido principal */
-.main-content {
-  margin-top: 120px;
-  flex-grow: 1;
+.main-content1 {
+  min-height: 80vh;
+  width: 100%;
+ 
+  margin: 100px auto 0 auto; /* margen arriba para el header fijo y auto para centrar horizontal */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #fafafa;
-  min-height: calc(100vh - 100px - 20px); /* header + footer aprox */
+  align-items: center;    /* centra contenido horizontalmente */
+  background-color: white;
+  overflow-x: hidden;
+  padding: 10px 30px 20px 30px;
+  box-sizing: border-box;
+  
 }
+
 
 .main-content h1 {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  margin: 50px 0 50px 0;
   color: #333;
   text-align: center;
+  max-width: 900px;
+  width: 100%;
 }
 
 .section {
@@ -145,11 +150,11 @@
 
 /* Responsividad */
 @media (max-width: 768px) {
-  .header {
+  .inicio-header {
     padding: 10px 15px;
   }
 
-  .nav-link {
+  .nav-link1 {
     font-size: 12px;
     padding: 6px 10px;
   }
@@ -173,7 +178,7 @@
 }
 
 @media (max-width: 400px) {
-  .header img {
+  .inicio-header img {
     width: 100px;
   }
 
@@ -181,7 +186,7 @@
     justify-content: center;
   }
 
-  .nav-link {
+  .nav-link1 {
     padding: 5px 8px;
     font-size: 11px;
   }

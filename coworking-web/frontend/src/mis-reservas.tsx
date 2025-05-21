@@ -22,7 +22,7 @@ export default function MisReservas() {
   return (
     <div className="app-container">
       <Header />
-      <main className="main-content">
+      <main className="main-content1">
         <div className="reservas-box">
           {reservas.length === 0 ? (
             <p className="empty-message">No tienes reservas</p>
@@ -48,11 +48,11 @@ function Header() {
     <header className="espacio-header">
       <img src="/logo.png" alt="Logo" />
       <nav className="nav">
-        <Link to="/user-home-page" className="nav-link">Inicio</Link>
-        <Link to="/user-meeting-page" className="nav-link">Espacios de reuniones</Link>
-        <Link to="/user-reservation-page" className="nav-link">Reservar espacio</Link>
-        <Link to="/user-My-reservations-page" className="nav-link">Mis reservas</Link>
-        <Link to="/login" className="nav-link">Cerrar sesión</Link>
+        <Link to="/user-home-page" className="nav-link1">Inicio</Link>
+        <Link to="/user-meeting-page" className="nav-link1">Espacios de reuniones</Link>
+        <Link to="/user-reservation-page" className="nav-link1">Reservar espacio</Link>
+        <Link to="/user-My-reservations-page" className="nav-link1">Mis reservas</Link>
+        <Link to="/login" className="nav-link1">Cerrar sesión</Link>
       </nav>
     </header>
   );
