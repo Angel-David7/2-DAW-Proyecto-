@@ -1,0 +1,16 @@
+# Node deps
+node_modules
+pnpm-lock.yaml
+
+# vite build / cache
+dist/
+.vite/
+*.cache/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Control de versiones y entorno
+.git
+.env
