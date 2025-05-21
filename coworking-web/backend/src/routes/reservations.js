@@ -7,9 +7,10 @@ const ctrl = require('../controllers/reservations');
 /**
  * @swagger
  * tags:
- *   name: Reservations
- *   description: Reservas de espacios
+ *   - name: Reservations
+ *     description: Reservas de espacios
  */
+
 /**
  * @swagger
  * /api/reservations:
@@ -40,7 +41,11 @@ const ctrl = require('../controllers/reservations');
 router.post(
   '/',
   checkAuth,
-  validate(z.object({ space_id: z.number().int(), start_time: z.string(), end_time: z.string() })),
+  validate(z.object({
+    space_id: z.number().int(),
+    start_time: z.string(),
+    end_time: z.string(),
+  })),
   ctrl.create
 );
 
@@ -51,9 +56,24 @@ router.post(
  *     tags: [Reservations]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Página de resultados
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Elementos por página
  *     responses:
  *       200:
- *         description: Reservas del usuario
+ *         description: Lista paginada de reservas del usuario
  */
 router.get('/', checkAuth, ctrl.listUser);
+
 module.exports = router;
+
