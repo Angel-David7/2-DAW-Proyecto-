@@ -6,9 +6,10 @@ const ctrl = require('../controllers/admin');
 /**
  * @swagger
  * tags:
- *   name: Admin
- *   description: Rutas de administración
+ *   - name: Admin
+ *     description: Endpoints de administración
  */
+
 /**
  * @swagger
  * /api/admin/reservations:
@@ -16,11 +17,29 @@ const ctrl = require('../controllers/admin');
  *     tags: [Admin]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Página de resultados
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Elementos por página
  *     responses:
  *       200:
- *         description: Todas las reservas
+ *         description: Lista paginada de todas las reservas
  */
-router.get('/reservations', checkAuth, checkRole('admin'), ctrl.list);
+router.get(
+  '/reservations',
+  checkAuth,
+  checkRole('admin'),
+  ctrl.list
+);
 
 /**
  * @swagger
@@ -35,9 +54,17 @@ router.get('/reservations', checkAuth, checkRole('admin'), ctrl.list);
  *         schema:
  *           type: integer
  *         required: true
+ *         description: ID de la reserva a eliminar
  *     responses:
  *       200:
  *         description: Reserva eliminada
  */
-router.delete('/reservations/:id', checkAuth, checkRole('admin'), ctrl.remove);
+router.delete(
+  '/reservations/:id',
+  checkAuth,
+  checkRole('admin'),
+  ctrl.remove
+);
+
 module.exports = router;
+
