@@ -25,6 +25,7 @@
 .admin-link {
   text-decoration: none;
   color: #333;
+  font-size: 14px;
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 8px;

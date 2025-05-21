@@ -16,6 +16,7 @@ import MisReservas from './mis-reservas.tsx';
 import AdminInicio  from "./inicio-admin.tsx";
 import GestionUsuarios from "./Gestion-usuarios.tsx";
 import Gestionarreservas from "./Gestionar-reservas.tsx";
+import Verreservas  from "./ver-reservas.tsx";
 
 // Define rutas
 const router = createBrowserRouter([
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   {path:"/admin-home-page", element:<AdminInicio />},
   {path:"/admin-Usermanagement-page", element:<GestionUsuarios />},
   {path:"/admin-reservations-page", element:<Gestionarreservas />},
+  {path:"/admin-MyBookings-page", element:<Verreservas />}
 
 ]);
 

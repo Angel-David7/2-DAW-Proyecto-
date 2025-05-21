@@ -1,0 +1,299 @@
+/* === SIDEBAR === */
+.verres-nav-desktop,
+.verres-nav-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background-color: #ddd;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+}
+
+.verres-nav-mobile {
+  display: none;
+}
+
+.verres-nav-desktop img,
+.verres-nav-mobile img {
+  width: 140px;
+  object-fit: contain;
+  margin-bottom: 40px;
+}
+
+.verres-nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2rem; /* Aumentado */
+  padding: 10px 10px;
+  border-radius: 8px;
+  background-color: #eee;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.verres-nav-link:hover {
+  background-color: #ccc;
+}
+
+/* === HEADER === */
+.verres-header {
+  position: fixed;
+  top: 0;
+  left: 160px;
+  right: 0;
+  height: 60px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  z-index: 999;
+  font-family: Arial, sans-serif;
+}
+
+.verres-header-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.verres-header-user {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* === MAIN CONTENT === */
+.verres-main-desktop {
+  margin-left: 160px;
+  padding: 10px 30px 20px 30px; /* Más arriba aún */
+  background-color: #fafafa;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  width: calc(100vw - 160px);
+  max-width: 1400px;
+  overflow-x: hidden;
+}
+
+.verres-main-mobile {
+  margin-left: 0;
+  padding: 10px 15px 20px 15px; /* Más arriba aún */
+  background-color: #fafafa;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.verres-content-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  color: #333;
+  box-sizing: border-box;
+  margin: 20px auto;
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.verres-details p {
+  margin: 8px 0;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* === ACTION BUTTONS === */
+.verres-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.verres-edit-btn {
+  padding: 8px 16px;
+  background-color: #2968bb;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.verres-edit-btn:hover {
+  background-color: #e6b007;
+}
+
+.verres-back-btn {
+  background-color: #2968bb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.verres-back-btn:hover {
+  background-color: #bbb;
+}
+
+/* === FORMULARIO === */
+.verres-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.verres-form label {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.verres-form input,
+.verres-form textarea {
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+button.verres-submit-btn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button.verres-submit-btn:hover {
+  background-color: #45a049;
+}
+
+/* === FOOTER === */
+.verres-footer {
+  margin-left: 160px;
+  background-color: #f2f2f2;
+  padding: 12px 30px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  width: calc(100vw - 160px);
+  max-width: 1400px;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .verres-nav-desktop {
+    display: none;
+  }
+
+  .verres-nav-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #ddd;
+    padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 1000;
+  }
+
+  .verres-nav-mobile img {
+    width: 100px;
+    margin-bottom: 0;
+  }
+
+  .verres-nav-link {
+    padding: 8px 10px;
+    font-size: 1.1rem; /* También aumentado en móvil */
+    background-color: transparent;
+    width: auto;
+  }
+
+  .verres-main-desktop,
+  .verres-main-mobile {
+    margin-left: 0;
+    margin-top: 100px;
+    padding: 10px 15px 20px 15px;
+    width: 100%;
+  }
+
+  .verres-header {
+    top: 60px;
+    left: 0;
+    right: 0;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+    gap: 8px;
+  }
+
+  .verres-content-container {
+    padding: 20px;
+    margin: 10px auto;
+  }
+
+  .verres-actions {
+    justify-content: flex-start;
+  }
+
+  .verres-edit-btn {
+    flex: none;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .verres-footer {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    font-size: 13px;
+    padding: 10px 15px;
+    position: relative;
+  }
+}
