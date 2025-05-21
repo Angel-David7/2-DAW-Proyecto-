@@ -1,6 +1,5 @@
 # Node deps
 node_modules
-pnpm-lock.yaml
 
 # vite build / cache
 dist/
