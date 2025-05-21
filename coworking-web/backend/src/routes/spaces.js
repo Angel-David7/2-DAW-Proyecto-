@@ -5,9 +5,10 @@ const ctrl = require('../controllers/spaces');
 /**
  * @swagger
  * tags:
- *   name: Spaces
- *   description: Gestión de espacios
+ *   - name: Spaces
+ *     description: Gestión de espacios
  */
+
 /**
  * @swagger
  * /api/spaces:
@@ -15,9 +16,23 @@ const ctrl = require('../controllers/spaces');
  *     tags: [Spaces]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Página de resultados
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Elementos por página
  *     responses:
  *       200:
- *         description: Lista de espacios
+ *         description: Lista paginada de espacios
  */
 router.get('/', checkAuth, ctrl.list);
+
 module.exports = router;
