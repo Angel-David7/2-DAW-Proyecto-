@@ -6,8 +6,8 @@ const ctrl = require('../controllers/auth');
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: Autenticación y registro
+ *   - name: Auth
+ *     description: Autenticación y registro
  */
 
 /**
@@ -35,7 +35,11 @@ const ctrl = require('../controllers/auth');
  */
 router.post(
   '/register',
-  validate(z.object({ name: z.string(), email: z.string().email(), password: z.string().min(6) })),
+  validate(z.object({
+    name: z.string().min(1),
+    email: z.string().email(),
+    password: z.string().min(6),
+  })),
   ctrl.register
 );
 
@@ -62,7 +66,10 @@ router.post(
  */
 router.post(
   '/login',
-  validate(z.object({ email: z.string().email(), password: z.string() })),
+  validate(z.object({
+    email: z.string().email(),
+    password: z.string().min(1),
+  })),
   ctrl.login
 );
 

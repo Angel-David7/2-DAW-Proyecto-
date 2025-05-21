@@ -7,9 +7,10 @@ const ctrl = require('../controllers/notifications');
 /**
  * @swagger
  * tags:
- *   name: Notifications
- *   description: Notificaciones de reservas
+ *   - name: Notifications
+ *     description: Notificaciones de reservas
  */
+
 /**
  * @swagger
  * /api/notifications:
@@ -17,9 +18,22 @@ const ctrl = require('../controllers/notifications');
  *     tags: [Notifications]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Página de resultados
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Elementos por página
  *     responses:
  *       200:
- *         description: Lista de notificaciones
+ *         description: Lista paginada de notificaciones
  */
 router.get('/', checkAuth, ctrl.list);
 
@@ -49,8 +63,12 @@ router.get('/', checkAuth, ctrl.list);
 router.post(
   '/',
   checkAuth,
-  validate(z.object({ reservation_id: z.number().int(), type: z.string() })),
+  validate(z.object({
+    reservation_id: z.number().int(),
+    type: z.string().min(1),
+  })),
   ctrl.create
 );
 
 module.exports = router;
+
