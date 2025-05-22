@@ -24,11 +24,13 @@ const ctrl = require('../controllers/auth');
  *             properties:
  *               name:
  *                 type: string
+ *               surname:
+ *                 type: string
  *               email:
  *                 type: string
  *               password:
  *                 type: string
- *             required: [name, email, password]
+ *             required: [name, surname, email, password]
  *     responses:
  *       200:
  *         description: Token JWT generado
@@ -37,6 +39,7 @@ router.post(
   '/register',
   validate(z.object({
     name: z.string().min(1),
+    surname: z.string.min(1),
     email: z.string().email(),
     password: z.string().min(6),
   })),
