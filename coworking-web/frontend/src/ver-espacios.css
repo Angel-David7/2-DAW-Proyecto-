@@ -31,13 +31,13 @@
   object-fit: contain;
 }
 
-.nav {
+.nav1 {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
 }
 
-.nav-link {
+.nav-link1 {
   padding: 8px 12px;
   background-color: #D9D9D9;
   border-radius: 8px;
@@ -48,12 +48,29 @@
 }
 
 /* Main content ocupa el alto visible menos header y footer */
-.main-content {
-  margin-top: 80px; /* alto header */
-  flex-grow: 1;
-  padding: 20px 30px;
+.main-content2 {
+  margin-top: 160px; /* espacio debajo del header fijo */
+  flex: 1;
+  padding: 20px 10px;
   background-color: #fafafa;
-  overflow-y: auto; /* scroll si hace falta */
+  box-sizing: border-box;
+
+  /* Centramos y damos más anchura */
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 99px;
+  width: 100%;
+
+  /* ✂️ ELIMINADO:
+     overflow-y: auto;
+     height: calc(100vh - 80px - 60px);
+  */
+}
+
+.main-content2 h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* Contenedor tarjetas */

@@ -5,7 +5,7 @@ export default function IndexPage() {
   return (
     <div className="container">
       <img src="/logo.png" alt="Logo" className="logo" />
-      <Link to="/login" className="login-link">
+      <Link to="/login" className="login-link1">
         Login
       </Link>
     </div>

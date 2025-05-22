@@ -5,7 +5,7 @@ import './Gestionar-reservas.css';
 
 function Header() {
   return (
-    <nav>
+    <nav className='nav2'>
       <img src="/logo.png" alt="Logo" />
       <Link to="/admin-home-page" className="nav-link">Inicio</Link>
       <Link to="/admin-Usermanagement-page" className="nav-link">Gestionar Usuarios</Link>

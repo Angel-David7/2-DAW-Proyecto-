@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 // Importa tus páginas
-import App from "./index.tsx";
+import IndexPage from "./index.tsx";
 import Login from "./login.tsx";
 import Registrate from "./register.tsx";
 import InicioUsuario from "./iniciousuario.tsx";
@@ -20,7 +20,7 @@ import Verreservas  from "./ver-reservas.tsx";
 
 // Define rutas
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
+  { path: "/", element: <IndexPage/> },
   { path: "/login", element: <Login /> },
   {path: "/register", element: <Registrate />},
   {path: "/user-home-page", element: <InicioUsuario />},
