@@ -43,18 +43,18 @@ services:
       - backend
     ports:
       - "3000:80"
-  services:
-    php_service:
-      build: ./php_service
-      volumes:
-      - ./php_service/manual:/app/manual  # Monta el PDF local
-      - ./php_service/src:/app/src
-      - ./php_service/composer.json:/app/composer.json
-      - ./php_service/composer.lock:/app/composer.lock
-      ports:
-        - "8080:8080"
-      depends_on:
-        - db
+ 
+  php_service:
+    build: ./php_service
+    volumes:
+    - ./php_service/manual:/app/manual  # Monta el PDF local
+    - ./php_service/src:/app/src
+    - ./php_service/composer.json:/app/composer.json
+    - ./php_service/composer.lock:/app/composer.lock
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
 
 volumes:
   pgdata:
