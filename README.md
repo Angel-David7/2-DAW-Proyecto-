@@ -108,17 +108,41 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-### Documentación Swagger
+## 📖 Documentación Swagger (API REST)
 
-Accede a la documentación interactiva de la API REST en:
+La API REST de GreenWork cuenta con documentación interactiva generada automáticamente mediante Swagger UI.  
+Esta documentación permite:
 
-http://localhost:4000/api/docs
+- Visualizar todos los endpoints disponibles, sus métodos, parámetros y respuestas.
+- Probar peticiones directamente desde el navegador (requiere autenticación JWT para rutas protegidas).
+- Descargar el archivo OpenAPI/Swagger en formato JSON.
 
-o vía HTTPS:
+### Acceso a Swagger UI
 
-https://localhost:4000/api/docs
+- **HTTP:** [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
+- **HTTPS:** [https://localhost:4000/api/docs](https://localhost:4000/api/docs) (certificados auto-firmados en desarrollo)
 
-Aquí podrás probar todos los endpoints directamente desde tu navegador.
+> **Nota:** Si usas HTTPS y el navegador muestra advertencias de seguridad, acepta el certificado auto-firmado para acceder a la documentación.
+
+### Características
+
+- **Exploración interactiva:** Prueba cualquier endpoint, incluyendo autenticación mediante JWT (usa el botón "Authorize" e introduce tu token).
+- **Modelos de datos:** Consulta los esquemas de entrada/salida de cada recurso.
+- **Errores y ejemplos:** Visualiza ejemplos de respuestas exitosas y de error.
+- **Actualización automática:** Los cambios en los endpoints se reflejan automáticamente en la documentación.
+
+### Consejos de uso
+
+1. **Autenticación:**  
+Para acceder a rutas protegidas, haz login primero (por ejemplo, usando `/api/auth/login`), copia el token JWT de la respuesta y pégalo en el botón "Authorize" de Swagger UI.
+
+2. **Pruebas rápidas:**  
+Puedes enviar peticiones reales a la API desde la interfaz web, ideal para desarrollo y testing.
+
+3. **Descarga del esquema:**  
+Si necesitas la especificación OpenAPI para generación de clientes o validación, puedes obtenerla en `/api/docs-json`.
+
+---
 
 ---**:
 
