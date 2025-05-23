@@ -144,19 +144,6 @@ Si necesitas la especificación OpenAPI para generación de clientes o validaci�
 
 ---
 
----**:
-
-PostgreSQL: localhost:5432
-
-pgAdmin: http://localhost:5050 (admin@… / secret)
-
-Backend HTTP: http://localhost:4000
-
-Backend HTTPS: https://localhost:4000 (certs auto-firmados)
-
-Frontend: http://localhost:3000
-
-PHP Service: http://localhost:8080/manual
 ## Endpoints Principales
 
 ### Auth
