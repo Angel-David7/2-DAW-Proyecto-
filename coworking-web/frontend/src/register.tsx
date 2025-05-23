@@ -192,7 +192,10 @@ export default function Register() {
           >
             <h2>Ley de Protección de Datos</h2>
             <p style={{ textAlign: 'justify' }}>
-              Tus datos personales serán tratados conforme a la legislación vigente...
+             La Ley de Protección de Datos protege la privacidad de las personas, 
+             regulando cómo se recopilan, usan y guardan sus datos personales.
+              Exige consentimiento, uso responsable y permite al usuario acceder, 
+              corregir o eliminar su información.
             </p>
             <div className="modal-buttons">
               <button onClick={() => setMostrarModal(false)} className="modal-cancel">
