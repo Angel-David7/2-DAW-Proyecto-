@@ -108,7 +108,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## 📖 Documentación Swagger (API REST)
+## Documentación Swagger (API REST)
 
 La API REST de GreenWork cuenta con documentación interactiva generada automáticamente mediante Swagger UI.  
 Esta documentación permite:
