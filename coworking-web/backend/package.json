@@ -5,7 +5,8 @@
     "bootstrap": "bash ../bootstrap.sh",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
-    "dev": "dotenv -e ../.env nodemon src/app.js"
+    "dev": "dotenv -e ../.env nodemon src/app.js",
+    "generate-token": "node scripts/generate-token.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
