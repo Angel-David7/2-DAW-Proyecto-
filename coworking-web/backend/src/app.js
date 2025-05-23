@@ -40,15 +40,13 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
   ["/api/reservations", "./routes/reservations"],
   ["/api/notifications", "./routes/notifications"],
   ["/api/admin", "./routes/admin"],
+  ["/api/admin", "./routes/adminUsers"],
 ].forEach(([routePath, modulePath]) => {
   console.log(`Mounting ${routePath} from ${modulePath}`);
   try {
     app.use(routePath, require(modulePath));
   } catch (err) {
-    console.error(
-      `Error mounting ${routePath} (${modulePath}):`,
-      err.message
-    );
+    console.error(`Error mounting ${routePath} (${modulePath}):`, err.message);
     process.exit(1);
   }
 });
