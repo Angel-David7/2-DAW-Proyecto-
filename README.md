@@ -142,24 +142,33 @@ Puedes enviar peticiones reales a la API desde la interfaz web, ideal para desar
 3. **Descarga del esquema:**  
 Si necesitas la especificación OpenAPI para generación de clientes o validación, puedes obtenerla en `/api/docs-json`.
 
-### Probar con autenticación JWT
+### Probar Endpoints Protegidos con JWT en Swagger
 
-Para probar endpoints protegidos desde Swagger:
+Para probar endpoints que requieren autenticación JWT desde Swagger UI, sigue estos pasos:
 
-Ejecuta el script para generar un token:
-``` 
-node backend/scripts/generate-token.js --id=1 --role=admin
-```
+1. **Genera un token JWT de prueba:**
 
-Esto imprimirá un JWT válido para pruebas.
+   Ejecuta el siguiente comando:
 
-Copia el token generado
+    ``` 
+    node backend/scripts/generate-token.js --id=1 --role=admin
+    ```
 
-Haz clic en el botón "Authorize" en Swagger UI
+Esto imprimirá un JWT válido en la consola.
 
-Pega el token con el prefijo Bearer  (ejemplo: Bearer eyJhbGciOi...)
+2. **Copia el token generado.**
 
-Ahora puedes hacer peticiones autenticadas.
+3. **Haz clic en el botón "Authorize".**
+
+4. **Pega el token con el prefijo `Bearer`:**
+    ```
+    Bearer eyJhbGciOi...
+    ``` 
+> Asegúrate de incluir el prefijo `Bearer` seguido de un espacio antes del token.
+
+6. **Confirma y cierra el cuadro de diálogo.**
+
+Ahora podrás realizar peticiones autenticadas a los endpoints protegidos directamente desde Swagger UI.
 
 ---
 
