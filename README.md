@@ -79,9 +79,61 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
     - **Backend HTTPS:** [https://localhost:4000](https://localhost:4000) (certs auto-firmados)
     - **Frontend:** [http://localhost:3000](http://localhost:3000)
     - **PHP Service:** [http://localhost:8080/manual](http://localhost:8080/manual)
+  
+6. **Comandos útiles
 
 ---
+🛠️ Comandos útiles
 
+# Levantar todo en modo desarrollo
+docker compose up --build -d
+
+# Detener y limpiar contenedores + volúmenes
+docker compose down --volumes
+
+# Reconstruir solo el backend
+docker compose up -d --build backend
+
+# Ejecutar migraciones y seeds desde backend
+cd backend
+pnpm run migrate
+pnpm run seed
+
+# Iniciar backend localmente con hot reload
+cd backend
+pnpm install
+pnpm run dev
+
+# Iniciar frontend localmente (Vite)
+cd frontend
+pnpm install
+pnpm run dev
+
+📖 Documentación Swagger
+
+Accede a la documentación interactiva de la API REST en:
+
+http://localhost:4000/api/docs
+
+o vía HTTPS:
+
+https://localhost:4000/api/docs
+
+Aquí podrás probar todos los endpoints directamente desde tu navegador.
+
+---**:
+
+PostgreSQL: localhost:5432
+
+pgAdmin: http://localhost:5050 (admin@… / secret)
+
+Backend HTTP: http://localhost:4000
+
+Backend HTTPS: https://localhost:4000 (certs auto-firmados)
+
+Frontend: http://localhost:3000
+
+PHP Service: http://localhost:8080/manual
 ## Endpoints Principales
 
 ### Auth
