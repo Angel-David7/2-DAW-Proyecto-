@@ -4,7 +4,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## 🎯 Especificaciones del Proyecto
+## Especificaciones del Proyecto
 
 - **Gestión de usuarios:** registro, login, roles (`user` y `admin`), validación.
 - **Gestión de espacios:** listado, paginación.
@@ -21,7 +21,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## ✅ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
 | Área           | Implementado | Detalles                                                                                   |
 |----------------|:------------:|-------------------------------------------------------------------------------------------|
@@ -39,7 +39,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## 🚀 Instalación y Levantamiento
+## Instalación y Levantamiento
 
 1. **Clonar el repositorio:**
     ```
@@ -82,7 +82,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## 📋 Endpoints Principales
+## Endpoints Principales
 
 ### Auth
 
@@ -118,7 +118,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## ⚙️ Tareas Pendientes / TODO
+## ⚙Tareas Pendientes / TODO
 
 - Añadir tests unitarios e2e (Jest/Supertest).
 - Mejorar UI del frontend.
@@ -127,7 +127,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## 📝 Licencia
+## Licencia
 
 MIT © 2025 GreenWork
 
