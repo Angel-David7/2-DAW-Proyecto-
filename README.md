@@ -118,7 +118,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
 
 ---
 
-## ⚙Tareas Pendientes / TODO
+## Tareas Pendientes / TODO
 
 - Añadir tests unitarios e2e (Jest/Supertest).
 - Mejorar UI del frontend.
