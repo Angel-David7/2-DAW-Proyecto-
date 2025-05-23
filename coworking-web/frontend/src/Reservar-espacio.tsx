@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './reservarespacio.css';
+import './reservarEspacio.css';
 
 export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
