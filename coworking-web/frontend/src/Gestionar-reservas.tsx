@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Box, Typography } from '@mui/material';
 import './Gestionar-reservas.css';
@@ -16,40 +16,52 @@ function Header() {
 }
 
 interface Reserva {
-  fecha: string;
-  espacio: string;
-}
-
-interface UsuarioConReservas {
-  nombre: string;
-  email: string;
-  reservas: Reserva[];
+  id: number;
+  userId: number;
+  spaceId: string;
+  spaceName: string;
+  userName: string;
+  userEmail: string;
+  scheduleTime: string;
+  reservationType: string;
+  description: string;
+  cost: number;
+  status: string;
 }
 
 function Content() {
-  const [usuariosConReservas, setUsuariosConReservas] = useState<UsuarioConReservas[]>([
-    {
-      nombre: 'Juan Pérez',
-      email: 'juan@example.com',
-      reservas: [
-        { fecha: '2025-05-01', espacio: 'Sala de reuniones A' },
-        { fecha: '2025-05-05', espacio: 'Oficina privada 3' },
-      ],
-    },
-    {
-      nombre: 'Ana Torres',
-      email: 'ana@example.com',
-      reservas: [{ fecha: '2025-05-02', espacio: 'Coworking 1' }],
-    },
-    {
-      nombre: 'Luis García',
-      email: 'luis@example.com',
-      reservas: [],
-    },
-  ]);
-
+  const [reservas, setReservas] = useState<Reserva[]>([]);
+  const [, setIsLoading] = useState(true);
+ 
   const [open, setOpen] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState<Reserva | null>(null);
+
+  useEffect(() => {
+    const fetchReservas = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:4000/api/admin/reservations', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al cargar las reservas');
+        }
+
+        const data = await response.json();
+        setReservas(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Error:', err);
+        
+        setIsLoading(false);
+      }
+    };
+
+    fetchReservas();
+  }, []);
 
   const handleOpenModal = (reserva: Reserva) => {
     setReservaSeleccionada(reserva);
@@ -61,19 +73,58 @@ function Content() {
     setReservaSeleccionada(null);
   };
 
-  const handleEliminar = (usuarioIndex: number, reservaIndex: number) => {
+  const handleEliminar = async (reservaId: number) => {
     const confirmar = window.confirm('¿Estás seguro de que quieres eliminar esta reserva?');
     if (!confirmar) return;
 
-    const updatedUsuarios = [...usuariosConReservas];
-    updatedUsuarios[usuarioIndex].reservas.splice(reservaIndex, 1);
-    setUsuariosConReservas(updatedUsuarios);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:4000/api/admin/reservations/{id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar la reserva');
+      }
+
+      setReservas(reservas.filter(r => r.id !== reservaId));
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Error al eliminar la reserva');
+    }
+  };
+
+  const handleModificarEstado = async (reservaId: number, nuevoEstado: string) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:4000/api/admin/reservations/{id}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: nuevoEstado })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar el estado de la reserva');
+      }
+
+      const reservaActualizada = await response.json();
+      setReservas(reservas.map(r => r.id === reservaId ? reservaActualizada : r));
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Error al actualizar el estado de la reserva');
+    }
   };
 
   const handleModificarReserva = (reserva: Reserva) => {
     const params = new URLSearchParams({
-      fecha: reserva.fecha,
-      espacio: reserva.espacio,
+      fecha: reserva.scheduleTime,
+      espacio: reserva.spaceName,
     });
     window.location.href = `./admin-MyBookings-page?${params.toString()}`;
   };
@@ -83,34 +134,31 @@ function Content() {
       <div className="content-container">
         <h1>Gestionar reservas</h1>
 
-        {usuariosConReservas.map((usuario, userIndex) => (
-          <div key={userIndex} className="user-block">
-            <strong>{usuario.nombre}</strong>
-            <small>{usuario.email}</small>
+        {reservas.map((reserva, reservaIndex) => (
+          <div key={reservaIndex} className="user-block">
+            <strong>{reserva.userName}</strong>
+            <small>{reserva.userEmail}</small>
 
             <ul className="reservas-list">
-              {usuario.reservas.length > 0 ? (
-                usuario.reservas.map((reserva, reservaIndex) => (
-                  <li key={reservaIndex} className="reserva-item">
-                    <div className="reserva-info">
-                      📅 {reserva.fecha} — 🏢 {reserva.espacio}
-                    </div>
-                    <div className="reserva-actions">
-                      <button onClick={() => handleOpenModal(reserva)} className="btn btn-ver">
-                        Ver
-                      </button>
-                      <button onClick={() => handleModificarReserva(reserva)} className="btn btn-modificar">
-                        Modificar
-                      </button>
-                      <button onClick={() => handleEliminar(userIndex, reservaIndex)} className="btn btn-eliminar">
-                        Eliminar
-                      </button>
-                    </div>
-                  </li>
-                ))
-              ) : (
-                <li className="no-reservas">No tiene reservas registradas.</li>
-              )}
+              <li className="reserva-item">
+                <div className="reserva-info">
+                  📅 {reserva.scheduleTime} — 🏢 {reserva.spaceName}
+                </div>
+                <div className="reserva-actions">
+                  <button onClick={() => handleOpenModal(reserva)} className="btn btn-ver">
+                    Ver
+                  </button>
+                  <button onClick={() => handleModificarReserva(reserva)} className="btn btn-modificar">
+                    Modificar
+                  </button>
+                  <button onClick={() => handleEliminar(reserva.id)} className="btn btn-eliminar">
+                    Eliminar
+                  </button>
+                  <button onClick={() => handleModificarEstado(reserva.id, 'NuevoEstado')} className="btn btn-estado">
+                    Cambiar Estado
+                  </button>
+                </div>
+              </li>
             </ul>
           </div>
         ))}
@@ -122,10 +170,10 @@ function Content() {
             {reservaSeleccionada && (
               <>
                 <Typography sx={{ mt: 2 }}>
-                  <strong>Fecha:</strong> {reservaSeleccionada.fecha}
+                  <strong>Fecha:</strong> {reservaSeleccionada.scheduleTime}
                 </Typography>
                 <Typography sx={{ mt: 1 }}>
-                  <strong>Espacio:</strong> {reservaSeleccionada.espacio}
+                  <strong>Espacio:</strong> {reservaSeleccionada.spaceName}
                 </Typography>
               </>
             )}

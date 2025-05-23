@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './ver-espacios.css';
+import { useState, useEffect } from 'react';
 
 function Header() {
   return (
@@ -33,12 +34,32 @@ function EspacioCard({ nombre, imagen }: { nombre: string; imagen: string }) {
 }
 
 export default function EspaciosReuniones() {
-  const espacios = [
-    { nombre: 'Sala A', imagen: '/imagenes/SalaA.jpg' },
-    { nombre: 'Sala B', imagen: '/imagenes/SalaB.jpg' },
-    { nombre: 'Auditorio', imagen: '/imagenes/Auditorio.jpg' },
-    { nombre: 'Sala de Conferencias', imagen: '/imagenes/Conferencia.jpg' },
-  ];
+  const [espacios, setEspacios] = useState([
+    { nombre: 'Sala A', imagen: '/descargar.jpeg' },
+    { nombre: 'Sala B', imagen: '/images (1).jpeg' },
+    { nombre: 'Auditorio', imagen: '/images (2).jpeg' },
+    { nombre: 'Sala de Conferencias', imagen: '/images.jpeg' }
+  ]);
+
+  useEffect(() => {
+    const fetchEspacios = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:4000/api/spaces', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!response.ok) throw new Error('Error al cargar espacios');
+        const data = await response.json();
+        setEspacios(data.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchEspacios();
+  }, []);
 
   return (
     <div className="app-container">

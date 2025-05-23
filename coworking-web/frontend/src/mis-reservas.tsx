@@ -4,34 +4,73 @@ import './mis-reservas.css';
 
 interface Reserva {
   id: number;
-  espacio: string;
-  fecha: string;
+  spaceId: string;
+  spaceName: string;
+  scheduleTime: string;
+  reservationType: string;
+  description: string;
+  cost: number;
+  status: string;
 }
 
 export default function MisReservas() {
   const [reservas, setReservas] = useState<Reserva[]>([]);
-  const nombreUsuario = 'Belinda';
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    const reservasGuardadas = localStorage.getItem(`reservas_${nombreUsuario}`);
-    if (reservasGuardadas) {
-      setReservas(JSON.parse(reservasGuardadas));
-    }
+    const fetchReservas = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        if (!token || !user.id) {
+          setError('Usuario no autenticado');
+          return;
+        }
+
+        const response = await fetch(`http://localhost:4000/api/reservations?userId=${user.id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al cargar las reservas');
+        }
+
+        const data = await response.json();
+        setReservas(data);
+      } catch (error) {
+        console.error('Error:', error);
+        setError('Error al cargar las reservas');
+      }
+    };
+
+    fetchReservas();
   }, []);
 
   return (
     <div className="app-container">
-      <Header />
-      <main className="main-content1">
+      <Header />      <main className="main-content1">
         <div className="reservas-box">
-          {reservas.length === 0 ? (
+          {error ? (
+            <p className="error-message">{error}</p>
+          ) : reservas.length === 0 ? (
             <p className="empty-message">No tienes reservas</p>
           ) : (
             <ul className="reserva-list">
               {reservas.map((reserva) => (
                 <li key={reserva.id} className="reserva-item">
-                  <strong>{reserva.espacio}</strong><br />
-                  <span>{new Date(reserva.fecha).toLocaleString()}</span>
+                  <div className="reserva-header">
+                    <strong>{reserva.spaceName}</strong>
+                    <span className="reserva-status">{reserva.status}</span>
+                  </div>
+                  <div className="reserva-details">
+                    <p><strong>Tipo:</strong> {reserva.reservationType}</p>
+                    <p><strong>Fecha:</strong> {new Date(reserva.scheduleTime).toLocaleString()}</p>
+                    <p><strong>Costo:</strong> ${reserva.cost.toLocaleString()}</p>
+                    <p><strong>Descripción:</strong> {reserva.description}</p>
+                  </div>
                 </li>
               ))}
             </ul>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import'./reservarespacio.css';
+import './reservarespacio.css';
 
 export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
@@ -24,14 +24,42 @@ export default function ReservarEspacio() {
     }
   }, [espacioSeleccionado]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Reserva enviada correctamente:
-Espacio: ${espacioSeleccionado}
-Costo: $${costo}
-Tipo: ${tipoReserva}
-Descripción: ${descripcion}
-Horario: ${horario}`);
+
+    try {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+      if (!user?.id) {
+        alert('Usuario no válido. Por favor inicie sesión nuevamente.');
+        return;
+      }
+
+      const response = await fetch('http://localhost:4000/api/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          spaceId: espacioSeleccionado,
+          userId: user.id,
+          reservationType: tipoReserva,
+          description: descripcion,
+          scheduleTime: horario,
+          cost: parseFloat(costo)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear la reserva');
+      }      await response.json();
+      alert('Reserva creada exitosamente');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al crear la reserva. Por favor, intente de nuevo.');
+    }
   };
 
   return (
@@ -64,7 +92,7 @@ Horario: ${horario}`);
               Costo:
               <input
                 type="text"
-                value={costo ? `$${costo}` : ''}
+                value={costo ? `$${Number(costo).toLocaleString()}` : ''}
                 readOnly
                 className="reservar-input"
               />
