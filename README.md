@@ -200,8 +200,6 @@ Ahora podrás realizar peticiones autenticadas a los endpoints protegidos direct
 - `DELETE /api/admin/reservations/:id`          → Eliminar
 - `GET    /api/admin/users?page=&limit=`        → Listar usuarios
 - `PATCH  /api/admin/users/:id/validate`        → Validar usuario
-- `GET    /api/admin/stats`                     → Estadísticas
-- `GET    /api/admin/logs`                      → Registros sistema
 
 ### Manual PDF
 
