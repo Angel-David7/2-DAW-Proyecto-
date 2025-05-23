@@ -1,7 +1,8 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './iniciousuario.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getCurrentUser } from './services/auth';
 
 const navLinkClass = "nav-link1";
 
@@ -19,8 +20,6 @@ function Header() {
     </header>
   );
 }
-
-
 
 function EspacioCard({ nombre, descripcion }: { nombre: string; descripcion: string }) {
   return (
@@ -62,23 +61,36 @@ function Contenido({ nombreUsuario }: { nombreUsuario: string }) {
 }
 
 export default function InicioUsuario() {
-  const usuarioReal = 'Belinda';
+  const [nombreUsuario, setNombreUsuario] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      // Si no hay usuario autenticado, redirigir al login
+      navigate('/login');
+      return;
+    }
+    setNombreUsuario(`${user.name} ${user.surname}`);
+  }, [navigate]);
 
   return (
     <div className="app-container">
       <Header />
-      <Contenido nombreUsuario={usuarioReal} />
+      <Contenido nombreUsuario={nombreUsuario} />
       <Footer />
     </div>
   );
 }
+
 function Footer() {
   return (
-    <footer className="inicio-footer">
+    <footer className="espacio-footer">
       © 2025 GreenWork · Todos los derechos reservados
     </footer>
   );
 }
+
 const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(

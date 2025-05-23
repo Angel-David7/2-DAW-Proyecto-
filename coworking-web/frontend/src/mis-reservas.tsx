@@ -4,45 +4,51 @@ import './mis-reservas.css';
 
 interface Reserva {
   id: number;
-  spaceId: string;
-  spaceName: string;
-  scheduleTime: string;
-  reservationType: string;
-  description: string;
-  cost: number;
+  space_id: number;
+  user_id: number;
+  start_time: string;
+  end_time: string;
   status: string;
+  space_name?: string; // Campo adicional que podríamos necesitar
 }
 
 export default function MisReservas() {
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [error, setError] = useState<string>('');
-
   useEffect(() => {
     const fetchReservas = async () => {
       try {
         const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-        if (!token || !user.id) {
-          setError('Usuario no autenticado');
+        if (!token) {
+          setError('No hay token de autenticación');
           return;
         }
 
-        const response = await fetch(`http://localhost:4000/api/reservations?userId=${user.id}`, {
+        console.log('Obteniendo reservas...');
+        const response = await fetch('http://localhost:4000/api/reservations', {
+          method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         });
 
         if (!response.ok) {
           throw new Error('Error al cargar las reservas');
+        }        const data = await response.json();
+        console.log('Datos recibidos:', data);
+        
+        if (Array.isArray(data)) {
+          setReservas(data);
+        } else if (data.data && Array.isArray(data.data)) {
+          setReservas(data.data);
+        } else {
+          console.error('Formato de datos inesperado:', data);
+          setError('Error en el formato de los datos');
         }
-
-        const data = await response.json();
-        setReservas(data);
       } catch (error) {
-        console.error('Error:', error);
-        setError('Error al cargar las reservas');
+        console.error('Error al cargar las reservas:', error);
+        setError('Error al cargar las reservas. Por favor, intente de nuevo.');
       }
     };
 
@@ -58,18 +64,18 @@ export default function MisReservas() {
           ) : reservas.length === 0 ? (
             <p className="empty-message">No tienes reservas</p>
           ) : (
-            <ul className="reserva-list">
-              {reservas.map((reserva) => (
+            <ul className="reserva-list">              {reservas.map((reserva) => (
                 <li key={reserva.id} className="reserva-item">
                   <div className="reserva-header">
-                    <strong>{reserva.spaceName}</strong>
-                    <span className="reserva-status">{reserva.status}</span>
+                    <strong>Espacio {reserva.space_id}</strong>
+                    <span className={`reserva-status ${reserva.status.toLowerCase()}`}>
+                      {reserva.status}
+                    </span>
                   </div>
                   <div className="reserva-details">
-                    <p><strong>Tipo:</strong> {reserva.reservationType}</p>
-                    <p><strong>Fecha:</strong> {new Date(reserva.scheduleTime).toLocaleString()}</p>
-                    <p><strong>Costo:</strong> ${reserva.cost.toLocaleString()}</p>
-                    <p><strong>Descripción:</strong> {reserva.description}</p>
+                    <p><strong>Fecha de inicio:</strong> {new Date(reserva.start_time).toLocaleString()}</p>
+                    <p><strong>Fecha de fin:</strong> {new Date(reserva.end_time).toLocaleString()}</p>
+                    <p><strong>Estado:</strong> {reserva.status}</p>
                   </div>
                 </li>
               ))}

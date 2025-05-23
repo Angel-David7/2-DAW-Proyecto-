@@ -33,13 +33,27 @@ function EspacioCard({ nombre, imagen }: { nombre: string; imagen: string }) {
   );
 }
 
+interface Espacio {
+  nombre: string;
+  imagen: string;
+}
+
+interface EspacioAPI {
+  name: string;
+  location: string;
+  description: string;
+  capacity: number;
+}
+
 export default function EspaciosReuniones() {
-  const [espacios, setEspacios] = useState([
+  const espaciosIniciales: Espacio[] = [
     { nombre: 'Sala A', imagen: '/descargar.jpeg' },
     { nombre: 'Sala B', imagen: '/images (1).jpeg' },
     { nombre: 'Auditorio', imagen: '/images (2).jpeg' },
     { nombre: 'Sala de Conferencias', imagen: '/images.jpeg' }
-  ]);
+  ];
+
+  const [espacios, setEspacios] = useState<Espacio[]>(espaciosIniciales);
 
   useEffect(() => {
     const fetchEspacios = async () => {
@@ -52,9 +66,18 @@ export default function EspaciosReuniones() {
         });
         if (!response.ok) throw new Error('Error al cargar espacios');
         const data = await response.json();
-        setEspacios(data.data);
+        
+        // Mapear los datos del servidor al formato que necesitamos
+        const espaciosFormateados = data.data.map((espacio: EspacioAPI, index: number) => ({
+          nombre: espacio.name || `Sala ${index + 1}`,
+          imagen: espaciosIniciales[index % espaciosIniciales.length].imagen // Reutilizar imágenes cíclicamente
+        }));
+        
+        setEspacios(espaciosFormateados);
       } catch (error) {
         console.error('Error:', error);
+        // En caso de error, mantener los espacios iniciales
+        setEspacios(espaciosIniciales);
       }
     };
 
