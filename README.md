@@ -47,7 +47,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
     cd coworking-web
     ```
 
-2. **Crear `.env` en la raíz (basado en `.env.example`):**
+2. **Crear `.env` en la raíz:**
     ```
     JWT_SECRET=supersecretkey123
     PORT_BACKEND=4000
@@ -56,7 +56,7 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
     DB_PORT=5432
     DB_NAME=greenwork
     DB_USER=greenwork
-    DB_PASSWORD=secret
+    DB_PASSWORD=greenwork
     PGADMIN_DEFAULT_EMAIL=admin@greenwork.com
     PGADMIN_DEFAULT_PASSWORD=secret
     ```
