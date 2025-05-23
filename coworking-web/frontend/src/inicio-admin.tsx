@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './inicio-admin.css';
+import { getCurrentUser } from './services/auth';
 
 function Header() {
   return (
@@ -14,10 +16,22 @@ function Header() {
 }
 
 function Content() {
+  const [nombreUsuario, setNombreUsuario] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        setNombreUsuario(user.name);
+      }
+    };
+    fetchUserData();
+  }, []);
+
   return (
     <main className="admin-main">
       <div className="admin-content-box">
-        <h1 className="admin-title">Bienvenido, Administrador</h1>
+        <h1 className="admin-title">¡Bienvenido/a, {nombreUsuario}!</h1>
         <br />
         <section className="admin-section">
           <h2 className="admin-section-title">Gestión de Usuarios</h2>

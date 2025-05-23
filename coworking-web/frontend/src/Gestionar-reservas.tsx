@@ -17,21 +17,19 @@ function Header() {
 
 interface Reserva {
   id: number;
-  userId: number;
-  spaceId: string;
-  spaceName: string;
-  userName: string;
-  userEmail: string;
-  scheduleTime: string;
-  reservationType: string;
-  description: string;
-  cost: number;
+  user_id: number;
+  space_id: number;
+  start_time: string;
+  end_time: string;
   status: string;
+  created_at: string;
+  user: string;  // nombre del usuario
+  space: string; // nombre del espacio
 }
 
 function Content() {
   const [reservas, setReservas] = useState<Reserva[]>([]);
-  const [, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
  
   const [open, setOpen] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState<Reserva | null>(null);
@@ -48,10 +46,13 @@ function Content() {
 
         if (!response.ok) {
           throw new Error('Error al cargar las reservas');
+        }        const data = await response.json();
+        if (data.data && Array.isArray(data.data)) {
+          setReservas(data.data);
+        } else {
+          console.error('Formato de datos inesperado:', data);
+          throw new Error('Formato de datos inesperado');
         }
-
-        const data = await response.json();
-        setReservas(data);
         setIsLoading(false);
       } catch (err) {
         console.error('Error:', err);
@@ -79,7 +80,7 @@ function Content() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/api/admin/reservations/{id}`, {
+      const response = await fetch(`http://localhost:4000/api/admin/reservations/${reservaId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -96,35 +97,10 @@ function Content() {
       alert('Error al eliminar la reserva');
     }
   };
-
-  const handleModificarEstado = async (reservaId: number, nuevoEstado: string) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/api/admin/reservations/{id}`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status: nuevoEstado })
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al actualizar el estado de la reserva');
-      }
-
-      const reservaActualizada = await response.json();
-      setReservas(reservas.map(r => r.id === reservaId ? reservaActualizada : r));
-    } catch (err) {
-      console.error('Error:', err);
-      alert('Error al actualizar el estado de la reserva');
-    }
-  };
-
-  const handleModificarReserva = (reserva: Reserva) => {
+  const handleModificarReserva= (reserva: Reserva) => {
     const params = new URLSearchParams({
-      fecha: reserva.scheduleTime,
-      espacio: reserva.spaceName,
+      fecha: reserva.start_time,
+      espacio: reserva.space,
     });
     window.location.href = `./admin-MyBookings-page?${params.toString()}`;
   };
@@ -134,34 +110,40 @@ function Content() {
       <div className="content-container">
         <h1>Gestionar reservas</h1>
 
-        {reservas.map((reserva, reservaIndex) => (
-          <div key={reservaIndex} className="user-block">
-            <strong>{reserva.userName}</strong>
-            <small>{reserva.userEmail}</small>
+        {isLoading ? (
+          <div>Cargando reservas...</div>
+        ) : reservas.length === 0 ? (
+          <div>No hay reservas disponibles</div>
+        ) : (
+          reservas.map((reserva) => (
+            <div key={reserva.id} className="user-block">
+              <strong>{reserva.user}</strong>
+              <small>ID de Reserva: {reserva.id}</small>
 
-            <ul className="reservas-list">
-              <li className="reserva-item">
-                <div className="reserva-info">
-                  📅 {reserva.scheduleTime} — 🏢 {reserva.spaceName}
-                </div>
-                <div className="reserva-actions">
-                  <button onClick={() => handleOpenModal(reserva)} className="btn btn-ver">
-                    Ver
-                  </button>
-                  <button onClick={() => handleModificarReserva(reserva)} className="btn btn-modificar">
-                    Modificar
-                  </button>
-                  <button onClick={() => handleEliminar(reserva.id)} className="btn btn-eliminar">
-                    Eliminar
-                  </button>
-                  <button onClick={() => handleModificarEstado(reserva.id, 'NuevoEstado')} className="btn btn-estado">
-                    Cambiar Estado
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ))}
+              <ul className="reservas-list">
+                <li className="reserva-item">
+                  <div className="reserva-info">
+                    🏢 Espacio: {reserva.space}<br/>
+                    📅 Inicio: {new Date(reserva.start_time).toLocaleString()}<br/>
+                    📅 Fin: {new Date(reserva.end_time).toLocaleString()}<br/>
+                    📋 Estado: {reserva.status}
+                  </div>
+                  <div className="reserva-actions">
+                    <button onClick={() => handleOpenModal(reserva)} className="btn btn-ver">
+                      Ver
+                    </button>
+                    <button onClick={() => handleModificarReserva(reserva)} className="btn btn-modificar">
+                      Modificar
+                    </button>                    
+                    <button onClick={() => handleEliminar(reserva.id)} className="btn btn-eliminar">
+                      Eliminar
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          ))
+        )}
 
         {/* Modal para detalles de reserva */}
         <Modal open={open} onClose={handleCloseModal}>
@@ -170,10 +152,25 @@ function Content() {
             {reservaSeleccionada && (
               <>
                 <Typography sx={{ mt: 2 }}>
-                  <strong>Fecha:</strong> {reservaSeleccionada.scheduleTime}
+                  <strong>ID de Reserva:</strong> {reservaSeleccionada.id}
                 </Typography>
                 <Typography sx={{ mt: 1 }}>
-                  <strong>Espacio:</strong> {reservaSeleccionada.spaceName}
+                  <strong>Usuario:</strong> {reservaSeleccionada.user}
+                </Typography>
+                <Typography sx={{ mt: 1 }}>
+                  <strong>Espacio:</strong> {reservaSeleccionada.space}
+                </Typography>
+                <Typography sx={{ mt: 1 }}>
+                  <strong>Fecha y hora de inicio:</strong> {new Date(reservaSeleccionada.start_time).toLocaleString()}
+                </Typography>
+                <Typography sx={{ mt: 1 }}>
+                  <strong>Fecha y hora de fin:</strong> {new Date(reservaSeleccionada.end_time).toLocaleString()}
+                </Typography>
+                <Typography sx={{ mt: 1 }}>
+                  <strong>Estado:</strong> {reservaSeleccionada.status}
+                </Typography>
+                <Typography sx={{ mt: 1 }}>
+                  <strong>Fecha de creación:</strong> {new Date(reservaSeleccionada.created_at).toLocaleString()}
                 </Typography>
               </>
             )}
