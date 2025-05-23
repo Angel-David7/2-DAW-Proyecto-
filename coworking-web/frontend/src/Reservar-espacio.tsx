@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './reservarespacio.css';
+import './reservarEspacio.css';
 
 export default function ReservarEspacio() {
   const [espacioSeleccionado, setEspacioSeleccionado] = useState('');
@@ -147,10 +147,22 @@ export default function ReservarEspacio() {
 }
 
 function EspacioImagen({ espacio }: { espacio: string }) {
+  // Mapeo de espacios a sus imágenes correspondientes
+  const imagenesEspacios: Record<string, string> = {
+    'Sala A': '/descargar.jpeg',
+    'Sala B': '/images (1).jpeg',
+    'Auditorio': '/images (2).jpeg',
+    'Sala de Conferencias': '/images.jpeg'
+  };
+
   return (
     <div className="reservar-imagen">
-      {espacio ? (
-        <img src={`/imagenes/${espacio}.jpg`} alt={`Imagen de ${espacio}`} />
+      {espacio && imagenesEspacios[espacio] ? (
+        <img 
+          src={imagenesEspacios[espacio]} 
+          alt={`Imagen de ${espacio}`}
+          className="espacio-preview-img"
+        />
       ) : (
         <span>Selecciona un espacio para ver la imagen</span>
       )}
