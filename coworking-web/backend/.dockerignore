@@ -2,5 +2,5 @@ node_modules
 npm-debug.log*
 pnpm-debug.log*
 .git
-.env
+
 docker-compose*.yml

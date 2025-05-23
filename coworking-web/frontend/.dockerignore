@@ -12,4 +12,3 @@ npm-debug.log*
 
 # Control de versiones y entorno
 .git
-.env
