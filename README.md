@@ -77,7 +77,8 @@ Este README describe el estado actual del proyecto **GreenWork** comparado con e
     - **pgAdmin:** [http://localhost:5050](http://localhost:5050) (`admin@…` / `secret`)
     - **Backend HTTP:** [http://localhost:4000](http://localhost:4000)
     - **Backend HTTPS:** [https://localhost:4000](https://localhost:4000) (certs auto-firmados)
-    - **Frontend:** [http://localhost:3000](http://localhost:3000)
+    - **Frontend HTTP:** [http://localhost:3000](http://localhost:3000)
+    - **Frontend HTTPS:** [https://localhost:3000](https://localhost:3000)
     - **PHP Service:** [http://localhost:8080/manual](http://localhost:8080/manual)
   
 6. **Comandos útiles**
@@ -199,8 +200,6 @@ Ahora podrás realizar peticiones autenticadas a los endpoints protegidos direct
 - `DELETE /api/admin/reservations/:id`          → Eliminar
 - `GET    /api/admin/users?page=&limit=`        → Listar usuarios
 - `PATCH  /api/admin/users/:id/validate`        → Validar usuario
-- `GET    /api/admin/stats`                     → Estadísticas
-- `GET    /api/admin/logs`                      → Registros sistema
 
 ### Manual PDF
 
