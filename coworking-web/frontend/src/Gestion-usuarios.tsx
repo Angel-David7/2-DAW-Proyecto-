@@ -28,6 +28,8 @@ function Content() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const apiUrl = '/api/admin/users';
+
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
@@ -38,7 +40,7 @@ function Content() {
         }
 
         console.log('Token:', token); // Para depuración
-        const response = await fetch('http://localhost:4000/api/admin/users', {
+        const response = await fetch(apiUrl, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -82,7 +84,8 @@ function Content() {
         return u;
       }));
 
-      const response = await fetch(`http://localhost:4000/api/admin/users/${id}/validate`, {
+      const validateUrl = `/api/admin/users/${id}/validate`;
+      const response = await fetch(validateUrl, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +101,7 @@ function Content() {
       }
 
       // Refrescar la lista de usuarios
-      const responseUsers = await fetch('http://localhost:4000/api/admin/users', {
+      const responseUsers = await fetch(apiUrl, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

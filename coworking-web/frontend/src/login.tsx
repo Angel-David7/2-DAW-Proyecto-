@@ -2,17 +2,45 @@ import './login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+const apiUrl = '/api/auth/login';
+
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const validateForm = () => {
+    let valid = true;
+    setEmailError('');
+    setPasswordError('');
+    if (!email.trim()) {
+      setEmailError('El correo es obligatorio.');
+      valid = false;
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      setEmailError('El correo no es válido.');
+      valid = false;
+    }
+    if (!password) {
+      setPasswordError('La contraseña es obligatoria.');
+      valid = false;
+    } else if (password.length < 6) {
+      setPasswordError('La contraseña debe tener al menos 6 caracteres.');
+      valid = false;
+    }
+    return valid;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    try {      const response = await fetch('http://localhost:4000/api/auth/login', {
+    setEmailError('');
+    setPasswordError('');
+    if (!validateForm()) return;
+    try {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -58,8 +86,13 @@ export default function Login() {
             type="email"
             placeholder="Introduce tu correo"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+              setError('');
+            }}
             required />
+          {emailError && <span className="error-message">{emailError}</span>}
         </div>
 
         <div className="input-group">
@@ -69,8 +102,13 @@ export default function Login() {
             type="password"
             placeholder="Introduce tu contraseña"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError('');
+              setError('');
+            }}
             required />
+          {passwordError && <span className="error-message">{passwordError}</span>}
         </div>
 
         <div className="register-link-wrapper">
@@ -80,7 +118,7 @@ export default function Login() {
 
         <button type="submit" className="submit-btn">Iniciar Sesión</button>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && !emailError && !passwordError && <p className="error-message">{error}</p>}
       </form>
     </div>
   );

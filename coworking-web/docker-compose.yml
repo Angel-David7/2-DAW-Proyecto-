@@ -32,17 +32,18 @@ services:
       DB_NAME: ${DB_NAME}
       PORT: ${PORT_BACKEND}
       JWT_SECRET: ${JWT_SECRET}
+      HTTPS: "true"
     depends_on:
       - db
     ports:
       - "${PORT_BACKEND}:${PORT_BACKEND}"
+    volumes:
+      - ./backend/certs:/app/certs
 
   frontend:
     build: ./frontend
-    depends_on:
-      - backend
     ports:
-      - "3000:80"
+      - "3000:443"
  
   php_service:
     build: ./php_service

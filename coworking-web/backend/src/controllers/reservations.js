@@ -7,10 +7,10 @@ exports.create = async (req, res, next) => {
     // Comprobar solapamientos
     const conflicts = await db('reservations')
       .where('space_id', space_id)
-      .andWhere(builder => builder
-        .whereBetween(['start_time', 'end_time'], [start_time, end_time])
-        .orWhereBetween([start_time, end_time], ['start_time', 'end_time'])
-      );
+      .andWhere(function() {
+        this.where('end_time', '>', start_time)
+            .andWhere('start_time', '<', end_time);
+      });
 
     if (conflicts.length) {
       return res.status(400).json({ error: 'Time slot conflict' });

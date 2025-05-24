@@ -15,6 +15,13 @@ function Header() {
         <Link to="/user-meeting-page" className={navLinkClass}>Espacios de reuniones</Link>
         <Link to="/user-reservation-page" className={navLinkClass}>Reservar espacio</Link>
         <Link to="/user-My-reservations-page" className={navLinkClass}>Mis reservas</Link>
+        <a
+          href="/manual"
+          className={navLinkClass}
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+        >Manual</a>
         <Link to="/login" className={navLinkClass}>Cerrar sesión</Link>
       </nav>
     </header>

@@ -9,6 +9,8 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const { swaggerOptions } = require("./swagger");
+const fs = require("fs");
+const https = require("https");
 
 const app = express();
 
@@ -62,8 +64,27 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
 
-// 8. Start HTTP server
+// 8. Start HTTP/HTTPS server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
-});
+const USE_HTTPS = process.env.HTTPS === "true";
+
+if (USE_HTTPS) {
+  const certPath = path.join(__dirname, "../certs/cert.pem");
+  const keyPath = path.join(__dirname, "../certs/key.pem");
+  if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
+    const cert = fs.readFileSync(certPath);
+    const key = fs.readFileSync(keyPath);
+    https.createServer({ key, cert }, app).listen(PORT, () => {
+      console.log(`HTTPS server listening on https://localhost:${PORT}`);
+    });
+  } else {
+    console.error("Certificados HTTPS no encontrados. Arrancando en HTTP.");
+    app.listen(PORT, () => {
+      console.log(`Server listening on http://localhost:${PORT}`);
+    });
+  }
+} else {
+  app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
+  });
+}

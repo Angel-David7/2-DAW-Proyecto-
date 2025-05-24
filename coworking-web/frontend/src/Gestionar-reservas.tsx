@@ -38,7 +38,8 @@ function Content() {
     const fetchReservas = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:4000/api/admin/reservations', {
+        const apiUrl = '/api/admin/reservations';
+        const response = await fetch(apiUrl, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -80,7 +81,8 @@ function Content() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/api/admin/reservations/${reservaId}`, {
+      const deleteUrl = `/api/admin/reservations/${reservaId}`;
+      const response = await fetch(deleteUrl, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

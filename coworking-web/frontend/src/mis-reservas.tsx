@@ -25,7 +25,8 @@ export default function MisReservas() {
         }
 
         console.log('Obteniendo reservas...');
-        const response = await fetch('http://localhost:4000/api/reservations', {
+        const apiUrl = '/api/reservations';
+        const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -59,7 +59,8 @@ export default function EspaciosReuniones() {
     const fetchEspacios = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:4000/api/spaces', {
+        const apiUrl = '/api/spaces';
+        const response = await fetch(apiUrl, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

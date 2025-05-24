@@ -8,7 +8,8 @@ exports.swaggerOptions = {
       description: 'Documentación de la API de GreenWork',
     },
     servers: [
-      { url: 'http://localhost:4000', description: 'Servidor local' },
+      { url: 'http://localhost:4000', description: 'Servidor local HTTP' },
+      { url: 'https://localhost:4000', description: 'Servidor local HTTPS' },
     ],
     components: {
       securitySchemes: {

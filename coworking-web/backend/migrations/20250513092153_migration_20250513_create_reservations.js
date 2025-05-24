@@ -9,7 +9,7 @@ exports.up = function (knex) {
       .integer("user_id")
       .unsigned()
       .references("id")
-      .inTable("spaces")
+      .inTable("users") // CORREGIDO: antes era "spaces"
       .onDelete("CASCADE");
 
     table

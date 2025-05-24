@@ -9,18 +9,6 @@ interface RegisterFormData {
   password: string;
 }
 
-interface RegisterResponse {
-  message: string;
-  user: {
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    role: string;
-  };
-  token: string;
-}
-
 export default function Register() {
   const navigate = useNavigate();
 
@@ -42,6 +30,33 @@ export default function Register() {
       ...prev,
       [name]: value
     }));
+    // Limpiar error al modificar el campo correspondiente
+    setError('');
+  };
+
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('El nombre es obligatorio.');
+      return false;
+    }
+    if (!formData.surname.trim()) {
+      setError('El apellido es obligatorio.');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError('El correo es obligatorio.');
+      return false;
+    }
+    // Validación básica de email
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      setError('El correo no es válido.');
+      return false;
+    }
+    if (!formData.password || formData.password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.');
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,35 +66,32 @@ export default function Register() {
       alert('Debes aceptar la Ley de Protección de Datos para registrarte.');
       return;
     }
-
     setError('');
+    if (!validateForm()) return;
     setLoading(true);
-
+    const apiUrl = '/api/auth/register';
     try {
-      const response = await fetch('http://localhost:4000/api/auth/register', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-  
       });
-
-      const data: RegisterResponse = await response.json();
-
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message || 'Error en el registro');
+        if (response.status === 409) {
+          setError('El correo ya está registrado. Usa otro o inicia sesión.');
+        } else {
+          setError(data.message || 'Error en el registro');
+        }
+        return;
       }
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      if (data.user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
-
+      // Limpiar localStorage y mostrar mensaje de éxito
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      alert('Registro exitoso. Ahora puedes iniciar sesión.');
+      navigate('/login');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error en el registro');
     } finally {
@@ -108,6 +120,7 @@ export default function Register() {
             placeholder="Introduce tu nombre"
             required
           />
+          {error.includes('nombre') && <span className="error-message">{error}</span>}
         </div>
 
         <div className="field">
@@ -121,6 +134,7 @@ export default function Register() {
             placeholder="Introduce tu apellido"
             required
           />
+          {error.includes('apellido') && <span className="error-message">{error}</span>}
         </div>
 
         <div className="field">
@@ -134,6 +148,7 @@ export default function Register() {
             placeholder="Introduce tu correo"
             required
           />
+          {error.includes('correo') && <span className="error-message">{error}</span>}
         </div>
 
         <div className="field">
@@ -147,6 +162,7 @@ export default function Register() {
             placeholder="Introduce tu contraseña"
             required
           />
+          {error.includes('contraseña') && <span className="error-message">{error}</span>}
         </div>
 
         <div
@@ -178,7 +194,13 @@ export default function Register() {
           {loading ? 'Registrando...' : 'Registrar'}
         </button>
 
-        {error && <p className="error-message">{error}</p>}
+        {/* Mensaje de error general si no es de campo específico */}
+        {error && !(
+          error.includes('nombre') ||
+          error.includes('apellido') ||
+          error.includes('correo') ||
+          error.includes('contraseña')
+        ) && <p className="error-message">{error}</p>}
       </form>
 
       {mostrarModal && (

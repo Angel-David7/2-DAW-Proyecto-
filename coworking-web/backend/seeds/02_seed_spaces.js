@@ -14,6 +14,7 @@ export async function seed(knex) {
       location: faker.location.city(),
       description: faker.lorem.sentence(),
       capacity: faker.number.int({ min: 5, max: 50 }),
+      price: faker.number.float({ min: 100, max: 500, precision: 0.01 }),
     });
   }
   await knex("spaces").insert(spaces);
